@@ -4,7 +4,6 @@
 #include "Menu.h"
 #include "Utils.h"
 
-
 //main loop del juego
 void GameLoop()
 {

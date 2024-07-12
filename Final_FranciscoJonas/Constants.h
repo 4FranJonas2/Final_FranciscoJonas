@@ -1,6 +1,5 @@
 #pragma once
 
-
 using namespace std;
 
 //constantes para el tamanio de la pantalla
