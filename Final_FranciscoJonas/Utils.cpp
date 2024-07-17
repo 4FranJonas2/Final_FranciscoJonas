@@ -87,3 +87,17 @@ bool IsCorrectInput(string& userInput)
 
     return true;
 }
+
+void ChangeConsoleFont(int sizeX, int sizeY)
+{
+    CONSOLE_FONT_INFOEX cfi;
+    cfi.cbSize = sizeof(cfi);
+    cfi.nFont = 0;
+
+    cfi.dwFontSize.X = sizeX;
+    cfi.dwFontSize.Y = sizeY;
+    cfi.FontFamily = FF_DONTCARE;
+    cfi.FontWeight = FW_NORMAL;
+
+    SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
+}

@@ -15,3 +15,5 @@ bool IsCorrectInput(int& userInput);
 bool IsCorrectInput(char& userInput);
 
 bool IsCorrectInput(string& userInput);
+
+void ChangeConsoleFont(int sizeX, int sizeY);
