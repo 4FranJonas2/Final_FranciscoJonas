@@ -6,19 +6,20 @@ using namespace std;
 
 constexpr auto PI = 3.14;;
 
-const int rows = 9;
-const int cols = 9;
-const int posx = 30;
-const int posy = 0;
+const int rows = 200;
+const int cols = 60;
+const int posx = 50;
+const int posy = 2;
 
-const int fontSizeX = 2;
-const int fontSizeY = 2;
+const int fontSizeX = 10;
+const int fontSizeY = 10;
 
 //constantes para el tamanio de la pantalla
 const int WIDTH = 500;
 const int HEIGHT = 500;
 
-const int white = 15;
+const int white = 255;
+const int orange = 97;
 const int transparent = 7;
 
 //HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);

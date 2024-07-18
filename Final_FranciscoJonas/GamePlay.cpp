@@ -10,7 +10,7 @@ void GameLoop()
 {
 	SetWindowSize();
 	InitDraw();
-	
+
 
 	system("pause");
 }
@@ -18,7 +18,7 @@ void GameLoop()
 //dibujado incial del juego
 void InitDraw()
 {
-	ChangeConsoleFont(fontSizeX, fontSizeY);
-	//DrawArenaLimits();
-	SetPixel();
+
+	DrawArenaLimits(posx,posy);
+
 }

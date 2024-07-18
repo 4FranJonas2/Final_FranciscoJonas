@@ -2,74 +2,52 @@
 #include "Constants.h"
 #include "Utils.h"
 #include <iostream>
+#include <Windows.h>
 
 void DrawWhiteCube()
 {
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 40);
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), white);
 	cout << "  ";
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 }
 
-
-void Drawpixel()
+void DrawOrangeCube(int posX,int posY)
 {
-	//Get a console handle
-	HWND myconsole = GetConsoleWindow();
-	//Get a handle to device context
-	HDC mydc = GetDC(myconsole);
-
-	int pixel = 0;
-
-	//Choose any color
-	COLORREF COLOR = RGB(255, 255, 255);
-
-	//Draw pixels
-	for (double i = 0; i < PI * 4; i += 0.05)
-	{
-		SetPixel(mydc, pixel, (int)(50 + 25 * cos(i)), COLOR);
-		pixel += 1;
-	}
-
-	ReleaseDC(myconsole, mydc);
-	cin.ignore();
+	Gotoxy(posX, posY);
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), orange);
+	cout << "  ";
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 }
 
-void SetPixel()
+void DrawArenaLimits(const int posx, const int posy)
 {
-	Gotoxy(posx, posy);
-	Drawpixel();
-}
+	ChangeConsoleFont(fontSizeX, fontSizeY);
 
-void DrawArenaLimits()
-{
-	DrawWhiteCube();
+	DrawOrangeCube(posx,posy);
 	for (int i = 0; i < cols; i++)
 	{
-		DrawWhiteCube();
+		DrawOrangeCube(posx+i, posy);
 	}
-	DrawWhiteCube();
+
+	DrawOrangeCube(posx*2, posy);
 	cout << endl;
 	for (int i = 0; i < rows; i++)
 	{
-		cout << (i + 1);
-		cout << " ";
+		DrawOrangeCube(posx+i, posy);
 		for (int j = 0; j < cols; j++)
 		{
 			cout << "  ";
 		}
-		cout << (i + 1) << endl;
+		DrawOrangeCube(posx*2, posy+i);
+		cout << endl;
 	}
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 219);
-	cout << "  ";
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
+	DrawOrangeCube(((posx*2)-1),((posy*2)-1));
+
 	for (int i = 0; i < cols; i++)
 	{
-		cout << (i + 1);
-		cout << " ";
+		DrawOrangeCube(posx, posy+i);
 	}
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 219);
-	cout << "  ";
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
+	DrawOrangeCube(posx, posy);
 	cout << endl;
 	cout << endl;
 
