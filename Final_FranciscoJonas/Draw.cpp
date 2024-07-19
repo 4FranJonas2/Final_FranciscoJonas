@@ -11,9 +11,9 @@ void DrawWhiteCube()
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 }
 
-void DrawOrangeCube(int posX,int posY)
+void DrawOrangeCube()
 {
-	Gotoxy(posX, posY);
+	
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), orange);
 	cout << "  ";
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
@@ -21,33 +21,40 @@ void DrawOrangeCube(int posX,int posY)
 
 void DrawArenaLimits(const int posx, const int posy)
 {
+
 	ChangeConsoleFont(fontSizeX, fontSizeY);
 
-	DrawOrangeCube(posx,posy);
+	Gotoxy(posx, posy);
+	DrawOrangeCube();
 	for (int i = 0; i < cols; i++)
 	{
-		DrawOrangeCube(posx+i, posy);
+		Gotoxy((posx+i)+1, posy);
+		DrawOrangeCube();
+		//DrawOrangeCube();
 	}
-
-	DrawOrangeCube(posx*2, posy);
+	DrawOrangeCube();	
 	cout << endl;
-	for (int i = 0; i < rows; i++)
+
+	for (int i = 0; i < rows+1; i++)
 	{
-		DrawOrangeCube(posx+i, posy);
+		Gotoxy(posx, (posy+i)+1);
+		DrawOrangeCube();
+
 		for (int j = 0; j < cols; j++)
-		{
 			cout << "  ";
-		}
-		DrawOrangeCube(posx*2, posy+i);
+		
+		DrawOrangeCube();
 		cout << endl;
 	}
-	DrawOrangeCube(((posx*2)-1),((posy*2)-1));
 
+	Gotoxy(posx, posy + cols);
+	DrawOrangeCube();
 	for (int i = 0; i < cols; i++)
 	{
-		DrawOrangeCube(posx, posy+i);
+		DrawOrangeCube();
 	}
-	DrawOrangeCube(posx, posy);
+
+	DrawOrangeCube();
 	cout << endl;
 	cout << endl;
 

@@ -8,7 +8,7 @@
 //main loop del juego
 void GameLoop()
 {
-	SetWindowSize();
+	//SetWindowSize();
 	InitDraw();
 
 

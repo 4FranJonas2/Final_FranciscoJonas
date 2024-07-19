@@ -6,17 +6,17 @@ using namespace std;
 
 constexpr auto PI = 3.14;;
 
-const int rows = 200;
-const int cols = 60;
-const int posx = 50;
-const int posy = 2;
+const int rows = 20;
+const int cols = 20;
+const int posx = 40;
+const int posy = 1;
 
 const int fontSizeX = 10;
 const int fontSizeY = 10;
 
 //constantes para el tamanio de la pantalla
-const int WIDTH = 500;
-const int HEIGHT = 500;
+const int WIDTH = 200;
+const int HEIGHT = 200;
 
 const int white = 255;
 const int orange = 97;

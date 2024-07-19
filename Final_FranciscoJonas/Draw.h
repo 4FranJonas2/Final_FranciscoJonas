@@ -4,5 +4,5 @@
 
 
 void DrawWhiteCube();
-void DrawOrangeCube(int posX, int posY);
+void DrawOrangeCube();
 void DrawArenaLimits(const int posx, const int posy);
