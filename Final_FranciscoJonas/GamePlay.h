@@ -2,5 +2,7 @@
 #include "Constants.h"
 #include "Menu.h"
 
-void InitDraw();
+
+
+//void InitDraw();
 void GameLoop();

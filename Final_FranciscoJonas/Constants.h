@@ -6,8 +6,9 @@ using namespace std;
 
 constexpr auto PI = 3.14;;
 
-const int rows = 20;
-const int cols = 20;
+const int MAX_ROWS = 20;
+const int MAX_COLS = 20;
+
 const int posx = 40;
 const int posy = 1;
 

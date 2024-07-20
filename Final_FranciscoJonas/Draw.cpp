@@ -1,8 +1,9 @@
 #include "Draw.h"
-#include "Constants.h"
-#include "Utils.h"
 #include <iostream>
 #include <Windows.h>
+#include "Constants.h"
+#include "Utils.h"
+#include "Matrix.h"
 
 void DrawWhiteCube()
 {
@@ -19,43 +20,93 @@ void DrawOrangeCube()
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 }
 
-void DrawArenaLimits(const int posx, const int posy)
+void DrawArena(const int posx, const int posy)
 {
+	Matrix matrix[MAX_ROWS][MAX_COLS];
 
 	ChangeConsoleFont(fontSizeX, fontSizeY);
 
-	Gotoxy(posx, posy);
-	DrawOrangeCube();
-	for (int i = 0; i < cols; i++)
+	cout << "  ";
+	for (int i = 0; i < MAX_COLS; i++)
 	{
-		Gotoxy((posx+i)+1, posy);
-		DrawOrangeCube();
-		//DrawOrangeCube();
+		cout << (i + 1);
+		cout << " ";
 	}
-	DrawOrangeCube();	
-	cout << endl;
-
-	for (int i = 0; i < rows+1; i++)
+	cout << " " << endl;
+	for (int i = 0; i < MAX_ROWS; i++)
 	{
-		Gotoxy(posx, (posy+i)+1);
-		DrawOrangeCube();
-
-		for (int j = 0; j < cols; j++)
-			cout << "  ";
-		
-		DrawOrangeCube();
-		cout << endl;
+		cout << (i + 1);
+		cout << " ";
+		for (int j = 0; j < MAX_COLS; j++)
+		{
+			switch (matrix[i][j].type)
+			{
+			case CellType::NONE:
+				cout << noneChar;
+				break;
+			default:
+				break;
+			}
+			cout << " ";
+		}
+		cout << (i + 1) << endl;
 	}
-
-	Gotoxy(posx, posy + cols);
-	DrawOrangeCube();
-	for (int i = 0; i < cols; i++)
+	cout << "  ";
+	for (int i = 0; i < MAX_COLS; i++)
 	{
-		DrawOrangeCube();
+		cout << (i + 1);
+		cout << " ";
 	}
-
-	DrawOrangeCube();
-	cout << endl;
-	cout << endl;
-
+	cout << " " << endl;
 }
+
+void DrawGameplay()
+{
+	Matrix matrix[MAX_ROWS][MAX_COLS];
+	Player player;
+
+	//draw
+	system("cls");
+	cout << "  ";
+	for (int i = 0; i < MAX_COLS; i++)
+	{
+		cout << (i + 1);
+		cout << " ";
+	}
+	cout << " " << endl;
+	for (int i = 0; i < MAX_ROWS; i++)
+	{
+		cout << (i + 1);
+		cout << " ";
+		for (int j = 0; j < MAX_COLS; j++)
+		{
+			if (i == player.posY && j == player.posX)
+			{
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 32);
+			}
+			switch (matrix[i][j].type)
+			{
+			case CellType::NONE:
+				cout << noneChar;
+				break;
+			
+			default:
+				break;
+			}
+			if (i == player.posY && j == player.posX)
+			{
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
+			}
+			cout << " ";
+		}
+		cout << (i + 1) << endl;
+	}
+	cout << "  ";
+	for (int i = 0; i < MAX_COLS; i++)
+	{
+		cout << (i + 1);
+		cout << " ";
+	}
+	cout << " " << endl;
+}
+	
