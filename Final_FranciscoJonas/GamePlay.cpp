@@ -11,14 +11,20 @@
 //main loop del juego
 void GameLoop()
 {
-	MatchStatus game;
+	srand(time(0));
+
 	Player player;
+	MatchStatus game;
+
 	DrawArena(posx, posy);
 
 	do
 	{
+		char userInput = _getch();
+
+		PlayerUpdate(player,userInput);
+
 		DrawGameplay();
-		PlayerUpdate(player);
 
 	} while (!game.exitSimulation);
 

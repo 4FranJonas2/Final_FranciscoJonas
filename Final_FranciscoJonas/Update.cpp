@@ -7,13 +7,12 @@
 #include "Matrix.h"
 
 //input
-Player PlayerUpdate(Player auxPlayer)
+Player PlayerUpdate(Player auxPlayer,char userInput)
 {
+
 	MatchStatus game;
 	Matrix matrix[MAX_ROWS][MAX_COLS];
 	Player Auxplayer;
-
-	char userInput = _getch();
 
 	//update
 	switch (userInput)

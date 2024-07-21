@@ -9,4 +9,4 @@ struct MatchStatus
 	bool siteSelection = false;
 };
 
-Player PlayerUpdate(Player auxPlayer);
+Player PlayerUpdate(Player auxPlayer,char userInput);
