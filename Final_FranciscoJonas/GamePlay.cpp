@@ -2,29 +2,26 @@
 #include <iostream>
 #include <conio.h>
 #include <Windows.h>
-#include "Constants.h"
-#include "Menu.h"
-#include "Utils.h"
-#include "Draw.h"
-#include "Update.h"
+
 
 //main loop del juego
 void GameLoop()
 {
 	srand(time(0));
+	HideCursor();
 
 	Player player;
 	MatchStatus game;
 
-	DrawArena(posx, posy);
+	DrawArena(player,noneChar,playerChar);
+
+	SetUp(player);
 
 	do
 	{
-		char userInput = _getch();
+		player = PlayerUpdate(player);
 
-		PlayerUpdate(player,userInput);
-
-		DrawGameplay();
+		DrawGameplay(player,noneChar,playerChar);
 
 	} while (!game.exitSimulation);
 

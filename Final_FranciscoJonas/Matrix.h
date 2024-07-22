@@ -1,5 +1,7 @@
 #pragma once
 #include "Constants.h"
+#include "Utils.h"
+#include "Player.h"
 
 enum class CellType
 {
@@ -14,11 +16,5 @@ struct Matrix
 
 };
 
-struct Player
-{
-	int posY = 0;
-	int posX = 0;
-	int nextPosY = 0;
-	int nextPosX = 0;
-};
+
 

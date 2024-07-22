@@ -1,13 +1,14 @@
 #pragma once
 #include <iostream>
 #include<Windows.h>
+#include <conio.h>
 
 using namespace std;
 
 constexpr auto PI = 3.14;;
 
-const int MAX_ROWS = 20;
-const int MAX_COLS = 20;
+const int MAX_ROWS = 9;
+const int MAX_COLS = 9;
 
 const int posx = 40;
 const int posy = 1;

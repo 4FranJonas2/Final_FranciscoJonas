@@ -129,6 +129,8 @@
   <ItemGroup>
     <ClCompile Include="Draw.cpp" />
     <ClCompile Include="GamePlay.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="SetUp.cpp" />
     <ClCompile Include="Update.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Matrix.cpp" />
@@ -139,6 +141,8 @@
     <ClInclude Include="Constants.h" />
     <ClInclude Include="Draw.h" />
     <ClInclude Include="GamePlay.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="SetUp.h" />
     <ClInclude Include="Update.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="Menu.h" />

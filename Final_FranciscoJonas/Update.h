@@ -2,6 +2,16 @@
 #include "Constants.h"
 #include "Utils.h"
 #include "Matrix.h"
+#include "Player.h"
+
+enum class Movemments
+{
+	STOP = 1,
+	UP,
+	DOWN,
+	RIGTH,
+	LEFT
+};
 
 struct MatchStatus
 {
@@ -9,4 +19,6 @@ struct MatchStatus
 	bool siteSelection = false;
 };
 
-Player PlayerUpdate(Player auxPlayer,char userInput);
+//Movemments dir;
+
+Player PlayerUpdate(Player& auxPlayer);

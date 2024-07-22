@@ -1,10 +1,13 @@
 #pragma once
 #include "Constants.h"
 #include "Utils.h"
+#include "Matrix.h"
+#include "Player.h"
 
-const char noneChar = 45;
+const char noneChar = ' ';
+const char playerChar = ' ';
 
-void DrawWhiteCube();
-void DrawOrangeCube();
-void DrawArena(const int posx, const int posy);
-void DrawGameplay();
+void DrawWhiteCube(char characterToDraw);
+void DrawOrangeCube(char characterToDraw);
+void DrawArena(Player player, const char noneChar, const char playerChar);
+void DrawGameplay(Player player, const char noneChar, const char playerChar);
