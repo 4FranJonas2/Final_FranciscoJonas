@@ -1,24 +1,25 @@
 #pragma once
-#include "Constants.h"
-#include "Utils.h"
-#include "Matrix.h"
 #include "Player.h"
 
-enum class Movemments
+struct SimulationStatus
 {
-	STOP = 1,
-	UP,
-	DOWN,
-	RIGTH,
-	LEFT
+	bool pauseStatus = false;
+	bool menuStatus = false;
+	bool endSimulation = false;
+	bool playGameOk = false;
 };
 
-struct MatchStatus
+struct MainMenu
 {
-	bool exitSimulation = false;
-	bool siteSelection = false;
+	bool menuOk = false;
+
 };
 
-//Movemments dir;
+MainMenu mainMenu;
+SimulationStatus simulation;
 
-Player PlayerUpdate(Player& auxPlayer);
+void UpdatePlayerCellNone(Matrix matrix[MAX_ROWS][MAX_COLS], Player& player);
+void UpdatePlayerCellWall(Matrix matrix[MAX_ROWS][MAX_COLS], Player& player);
+void CheckNextCell(Matrix matrix[MAX_ROWS][MAX_COLS], Player& player);
+void UpdatePause(Player& player);
+void GameLogic(Player& player);

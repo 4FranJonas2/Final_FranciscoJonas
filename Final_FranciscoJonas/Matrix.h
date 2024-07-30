@@ -1,20 +1,22 @@
 #pragma once
 #include "Constants.h"
-#include "Utils.h"
-#include "Player.h"
+
+
 
 enum class CellType
 {
 	NONE = 1,
 	PLAYER,
-	COLOR
+	COLOR,
+	WALL
 };
 
 struct Matrix
 {
 	CellType type = CellType::NONE;
-
 };
 
+Matrix matrix[MAX_ROWS][MAX_COLS];
 
+void matrixSetUp(Matrix matrix[MAX_ROWS][MAX_COLS]);
 

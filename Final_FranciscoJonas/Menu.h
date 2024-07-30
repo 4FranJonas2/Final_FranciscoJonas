@@ -1,12 +1,17 @@
 #pragma once
-#include "Constants.h"
+#include "Update.h"
+#include "Draw.h"
+#include "Input.h"
 
-enum class MainMenuOptions
+enum class MENU
 {
-	STARTGAME = 1,
-	OPTIONS,
+	NUL,
+	PLAY,
+	RULES,
 	CREDITS,
-	EXIT
+	EXIT,
+	PAUSE
 };
 
-void MainMenu();
+void MenuLogic();
+void Menu();

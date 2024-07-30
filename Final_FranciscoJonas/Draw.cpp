@@ -1,15 +1,31 @@
 #include "Draw.h"
 #include <iostream>
 #include <Windows.h>
+#include "Utils.h"
 
-void DrawWhiteCube(char characterToDraw)
+//void DrawWhiteCube(char characterToDraw)
+//{
+//	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), white);
+//	cout << characterToDraw;
+//	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), transparent);
+//}
+//
+//void DrawOrangeCube(char characterToDraw)
+//{
+//
+//	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), orange);
+//	cout << characterToDraw;
+//	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), transparent);
+//}
+
+void DrawPlayerCell(char characterToDraw)
 {
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), white);
 	cout << characterToDraw;
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), transparent);
 }
 
-void DrawOrangeCube(char characterToDraw)
+void DrawWallCell(char characterToDraw)
 {
 
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), orange);
@@ -17,119 +33,128 @@ void DrawOrangeCube(char characterToDraw)
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), transparent);
 }
 
-void DrawArena(Player player, const char noneChar, const char playerChar)
+void DrawColorCell(char characterToDraw)
 {
-	Matrix matrix[MAX_ROWS][MAX_COLS];
-
-	ChangeConsoleFont(fontSizeX, fontSizeY);
-
-	system("cls");
-	DrawOrangeCube(noneChar);
-	for (int i = 0; i < MAX_COLS; i++)
-	{
-		DrawOrangeCube(noneChar);
-		DrawOrangeCube(noneChar);
-	}
-	DrawOrangeCube(noneChar);
-	cout << endl;
-
-	for (int i = 0; i < MAX_ROWS; i++)
-	{
-		DrawOrangeCube(noneChar);
-
-		for (int j = 0; j < MAX_COLS; j++)
-		{
-			if (i == player.posY && j == player.posX)
-			{
-				matrix[i][j].type = CellType::PLAYER;
-			}
-
-			switch (matrix[i][j].type)
-			{
-			case CellType::NONE:
-				cout << noneChar;
-				break;
-
-			case CellType::PLAYER:
-				DrawWhiteCube(playerChar);
-				break;
-
-			default:
-				break;
-			}
-
-			cout << noneChar;
-		}
-		DrawOrangeCube(noneChar);
-
-		cout << endl;
-	}
-
-	DrawOrangeCube(noneChar);
-	for (int i = 0; i < MAX_COLS; i++)
-	{
-		DrawOrangeCube(noneChar);
-		DrawOrangeCube(noneChar);
-	}
-	DrawOrangeCube(noneChar);
-	cout << endl;
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BLUE);
+	cout << characterToDraw;
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), transparent);
 }
 
-void DrawGameplay(Player player, const char noneChar, const char playerChar)
+void DrawMatrixCell(Matrix matrix[MAX_ROWS][MAX_COLS], Player& player)
 {
-	Matrix matrix[MAX_ROWS][MAX_COLS];
-
-	ChangeConsoleFont(fontSizeX, fontSizeY);
-
-	//draw
-	system("cls");
-	DrawOrangeCube(noneChar);
-	for (int i = 0; i < MAX_COLS; i++)
+	for (int i = 0; i < MAX_ROWS; i++)
 	{
-		DrawOrangeCube(noneChar);
-		DrawOrangeCube(noneChar);
+		for (int j = 0; j < MAX_COLS; j++)
+		{
+			if (matrix[i][j].type == CellType::PLAYER)
+			{
+				Gotoxy(arenaDrawPosX + i, arenaDrawPosY + j);
+				DrawPlayerCell(white);
+			}
+
+			else if (matrix[i][j].type == CellType::COLOR)
+			{
+				Gotoxy(arenaDrawPosX + i, arenaDrawPosY + j);
+				DrawColorCell(BLUE);
+			}
+		}
 	}
-	DrawOrangeCube(noneChar);
-	cout << endl;
+}
+
+void DrawGamePlayMenu(Player& player)
+{
+	Gotoxy(menuPosX, menuPosY);
+
+	cout << " GAME STATS" << endl;
+	cout << "\n" << endl;
+	cout << " Matches Won: " << player.MatchesWon << endl;
+	cout << " Matches Lost: " << player.MatchesLost << endl;
+	cout << "\n" << endl;
+	cout << " CellColored: " << player.cellColored << endl;
+	cout << "\n" << endl;
+	cout << " Kills: " << player.kills << endl;
+	cout << " Deaths: " << player.death << endl;
+	cout << "\n" << endl;
+	cout << " Points: " << player.points << endl;
+	cout << "\n\n" << endl;
+	cout << " Press P to PAUSE game." << endl;
+	cout << " Press E to back MENU." << endl;
+	cout << " Press R to RESUME game." << endl;
+	cout << "\n\n" << endl;
+
+}
+
+void Draw(Matrix matrix[MAX_ROWS][MAX_COLS], Player& auxPlayer)
+{
+	system("cls");
 
 	for (int i = 0; i < MAX_ROWS; i++)
 	{
-		DrawOrangeCube(noneChar);
-
 		for (int j = 0; j < MAX_COLS; j++)
 		{
-			if (i == player.posY && j == player.posX)
-			{
-				matrix[i][j].type = CellType::PLAYER;
-			}
+			Gotoxy(arenaDrawPosX + i, arenaDrawPosY + j);
 
 			switch (matrix[i][j].type)
 			{
 			case CellType::NONE:
-				cout << noneChar;
+				cout << " ";
 				break;
 
 			case CellType::PLAYER:
-				DrawWhiteCube(playerChar);
+				DrawPlayerCell(playerChar);
+				break;
+
+			case CellType::WALL:
+				DrawWallCell(noneChar);
+				break;
+
+			case CellType::COLOR:
+				DrawColorCell(BLUE);
 				break;
 
 			default:
 				break;
 			}
-
-			cout << noneChar;
 		}
-		DrawOrangeCube(noneChar);
-
 		cout << endl;
 	}
+}
 
-	DrawOrangeCube(noneChar);
-	for (int i = 0; i < MAX_COLS; i++)
-	{
-		DrawOrangeCube(noneChar);
-		DrawOrangeCube(noneChar);
-	}
-	DrawOrangeCube(noneChar);
-	cout << endl;
+void DrawCredits()
+{
+	system("cls");
+
+	Gotoxy(arenaDrawPosX, arenaDrawPosY);
+
+	cout << "      CREDITS " << endl;
+	cout << "\n\n" << endl;
+	cout << "Made by FRANCISCO JONAS" << endl;
+	cout << "\n" << endl;
+	cout << "   FINAL INTEGRADOR" << endl;
+	cout << "\n\n" << endl;
+	cout << " Press ESC to go back..." << endl;
+	cout << "\n" << endl;
+
+	system("pause");
+
+	system("cls");
+
+}
+
+void DrawMainMenu()
+{
+
+	cout << "    TRON " << endl;
+	cout << "   by Fran" << endl;
+	cout << "\n";
+	cout << "    MENU  " << endl;
+	cout << "\n\n";
+	cout << "1.  PLAY " << endl;
+	cout << "\n";
+	cout << "2.  RULES " << endl;
+	cout << "\n";
+	cout << "3. CREDITS " << endl;
+	cout << "\n";
+	cout << "4.  EXIT " << endl;
+	cout << "\n\n";
 }

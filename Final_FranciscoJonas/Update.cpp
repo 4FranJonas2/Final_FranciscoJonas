@@ -1,77 +1,103 @@
 #include "Update.h"
+#include "Menu.h"
 
-//input
-Player PlayerUpdate(Player& auxPlayer)
+void UpdatePlayerCellNone(Matrix matrix[MAX_ROWS][MAX_COLS], Player& player)
 {
+	matrix[player.posX][player.posY].type = CellType::COLOR;
+	player.posX = player.nextPosX;
+	player.posY = player.nextPosY;
+	matrix[player.posX][player.posY].type = CellType::PLAYER;
+}
 
-	MatchStatus game;
-	Matrix matrix[MAX_ROWS][MAX_COLS];
-	Player Auxplayer;
+void UpdatePlayerCellWall(Matrix matrix[MAX_ROWS][MAX_COLS], Player& player)
+{
+	matrix[player.posX][player.posY].type = CellType::PLAYER;
+	player.nextPosX = player.posX;
+	player.nextPosY = player.posY;
+	player.posX = player.nextPosX;
+	player.posY = player.nextPosY;
+	matrix[player.posX][player.posY].type = CellType::PLAYER;
+}
 
-	char userInput = _getch();
-
-	//update
-	switch (userInput)
+void CheckNextCell(Matrix matrix[MAX_ROWS][MAX_COLS], Player& player)
+{
+	if (matrix[player.nextPosX][player.nextPosY].type == CellType::NONE)
 	{
-	case 'w':
-	case 'W':
-		Auxplayer.nextPosY--;
-		break;
+		player.cellColored++;
+		UpdatePlayerCellNone(matrix, player);
+	}
 
-	case 'a':
-	case 'A':
-		Auxplayer.nextPosX--;
-		break;
+	else if (matrix[player.nextPosX][player.nextPosY].type == CellType::WALL)
+	{
+		UpdatePlayerCellWall(matrix, player);
+	}
 
-	case 's':
-	case 'S':
-		Auxplayer.nextPosY++;
-		break;
+	else if (matrix[player.nextPosX][player.nextPosY].type == CellType::COLOR)
+	{
+		player.gameOver = true;
 
-	case 'd':
-	case 'D':
-		Auxplayer.nextPosX++;
-		break;
+	}
 
-	case 'p':
-	case 'P':
-		game.exitSimulation = true;
-		break;
+	else if (matrix[player.nextPosX][player.nextPosY].type == CellType::PLAYER)
+	{
+		player.gameOver = true;
+	}
+}
+
+void UpdatePause(Player& player)
+{
+	MENU menu;
+
+	switch (_getch())
+	{
 
 	case 'e':
 	case 'E':
-		matrix[Auxplayer.posY][Auxplayer.posX].type = CellType::NONE;
+		system("cls");
+		player.gameOver = false;
+		simulation.pauseStatus = true;
+		mainMenu.menuOk = false;
+		menu = MENU::NUL;
+		break;
+
+	case 'r':
+	case 'R':
+		player.gameOver = false;
 		break;
 
 	default:
 		break;
 	}
-
-	if (Auxplayer.nextPosX < 0)
-		Auxplayer.nextPosX = 0;
-	else if (Auxplayer.nextPosX >= MAX_COLS)
-		Auxplayer.nextPosX = MAX_COLS - 1;
-
-	if (Auxplayer.nextPosY < 0)
-		Auxplayer.nextPosY = 0;
-	else if (Auxplayer.nextPosY >= MAX_ROWS)
-		Auxplayer.nextPosY = MAX_ROWS - 1;
-
-	if (matrix[Auxplayer.nextPosY][Auxplayer.nextPosX].type == CellType::COLOR)
-	{
-		/*Auxplayer.nextPosX = Auxplayer.posX;
-		Auxplayer.nextPosY = Auxplayer.posY;
-		Auxplayer.posX = Auxplayer.nextPosX;
-		Auxplayer.posY = Auxplayer.nextPosY;*/
-	}
-	else if (matrix[Auxplayer.nextPosY][Auxplayer.nextPosX].type == CellType::NONE)
-	{
-		matrix[Auxplayer.posY][Auxplayer.posX].type = CellType::NONE;
-		Auxplayer.posX = Auxplayer.nextPosX;
-		Auxplayer.posY = Auxplayer.nextPosY;
-		matrix[Auxplayer.posY][Auxplayer.posX].type = CellType::PLAYER;
-	}
-
-	return Auxplayer;
 }
 
+void GameLogic(Player& player)
+{
+	switch (playerDir)
+	{
+	case DIRECTION::STOP:
+		break;
+
+	case DIRECTION::LEFT:
+		player.nextPosX--;
+		CheckNextCell(matrix, player);
+		break;
+
+	case DIRECTION::RIGHT:
+		player.nextPosX++;
+		CheckNextCell(matrix, player);
+		break;
+
+	case DIRECTION::UP:
+		player.nextPosY--;
+		CheckNextCell(matrix, player);
+		break;
+
+	case DIRECTION::DOWN:
+		player.nextPosY++;
+		CheckNextCell(matrix, player);
+		break;
+
+	default:
+		break;
+	}
+}

@@ -5,25 +5,36 @@
 
 using namespace std;
 
-constexpr auto PI = 3.14;;
+//Menu position
+const int menuPosX = 10;
+const int menuPosY = 2;
 
-const int MAX_ROWS = 9;
-const int MAX_COLS = 9;
+//console size
+const int WIDTH = 100;
+const int HEIGHT = 50;
 
-const int posx = 40;
-const int posy = 1;
+//arena size
+const int MAX_ROWS = 40;
+const int MAX_COLS = 20;
 
-const int fontSizeX = 10;
-const int fontSizeY = 10;
+//cleaner size
+const int CLEAN_ROWS = 30;
+const int CLEAN_COLS = 30;
 
-//constantes para el tamanio de la pantalla
-const int WIDTH = 200;
-const int HEIGHT = 200;
+//arena draw position
+const int arenaDrawPosX = 40;
+const int arenaDrawPosY = 5;
 
+//colors
 const int white = 255;
 const int orange = 97;
 const int transparent = 7;
+const int GREEN = 42;
+const int BLUE = 153;
 
-//HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-// you can loop k higher to see more color choices
+//font
+const int fontSizeX = 10;
+const int fontSizeY = 15;
+const char noneChar = ' ';
+const char playerChar = ' ';
 

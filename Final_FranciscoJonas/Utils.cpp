@@ -101,3 +101,4 @@ void ChangeConsoleFont(int sizeX, int sizeY)
 
     SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
 }
+
