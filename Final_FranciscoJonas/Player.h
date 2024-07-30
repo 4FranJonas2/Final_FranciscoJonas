@@ -1,6 +1,5 @@
 #pragma once
-#include <iostream>
-#include <Windows.h>
+
 #include "Matrix.h"
 
 enum class DIRECTION
@@ -36,7 +35,5 @@ struct Player
 	bool gameOver = false;
 };
 
-DIRECTION playerDir;
-Player player;
 
-Player playerSetUp(Player& auxPlayer, Matrix matrix[MAX_ROWS][MAX_COLS], int spawnPosX, int spawnPosY);
+Player playerSetUp(Player& auxPlayer, Matrix matrix[MAX_ROWS][MAX_COLS], int spawnPosX, int spawnPosY, DIRECTION& playerDir);

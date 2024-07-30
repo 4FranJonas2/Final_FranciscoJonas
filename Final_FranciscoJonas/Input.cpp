@@ -1,10 +1,6 @@
 #include "Input.h"
-#include <iostream>
-#include <conio.h>
-#include "Menu.h"
 
-
-void InputInGame(Player& player, Matrix matrix[MAX_ROWS][MAX_COLS])
+void InputInGame(Player& player, Matrix matrix[MAX_ROWS][MAX_COLS],DIRECTION& playerDir)
 {
 	if (_kbhit())
 	{
@@ -30,22 +26,10 @@ void InputInGame(Player& player, Matrix matrix[MAX_ROWS][MAX_COLS])
 			playerDir = DIRECTION::DOWN;
 			break;
 
-			/*case 'e':
-			case 'E':
-				player.gameOver = false;
-				mainMenu.menuOk = false;
-				simulation.pauseStatus = true;
-				break;*/
-
 		case 'p':
 		case 'P':
 			player.gameOver = true;
 			break;
-
-			/*case 'r':
-			case 'R':
-				player.gameOver = false;
-				break;*/
 
 		default:
 			break;
@@ -53,32 +37,35 @@ void InputInGame(Player& player, Matrix matrix[MAX_ROWS][MAX_COLS])
 	}
 }
 
-void InputInMenu()
+void InputInMenu(MENU& menu)
 {
-	MENU menu;
-
 	if (_kbhit())
 	{
 		switch (_getch())
 		{
 		case '1':
+			system("cls");
 			menu = MENU::PLAY;
 			break;
 
 		case '2':
+			system("cls");
 			menu = MENU::RULES;
 			break;
 
 		case '3':
+			system("cls");
 			menu = MENU::CREDITS;
 			break;
 
 		case '4':
+			system("cls");
 			menu = MENU::EXIT;
 			break;
 
-		case 'ESC':
-			DrawMainMenu();
+		case ESC:
+			system("cls");
+			menu = MENU::NUL;
 			break;
 
 		default:

@@ -1,5 +1,5 @@
 #pragma once
-#include "Player.h"
+#include "Draw.h"
 
 struct SimulationStatus
 {
@@ -15,11 +15,8 @@ struct MainMenu
 
 };
 
-MainMenu mainMenu;
-SimulationStatus simulation;
-
 void UpdatePlayerCellNone(Matrix matrix[MAX_ROWS][MAX_COLS], Player& player);
 void UpdatePlayerCellWall(Matrix matrix[MAX_ROWS][MAX_COLS], Player& player);
 void CheckNextCell(Matrix matrix[MAX_ROWS][MAX_COLS], Player& player);
-void UpdatePause(Player& player);
-void GameLogic(Player& player);
+void UpdatePause(Player& player, SimulationStatus& simulation, MainMenu& mainMenu, MENU& menu);
+void GameLogic(Player& player, DIRECTION& playerDir, Matrix matrix[MAX_ROWS][MAX_COLS]);

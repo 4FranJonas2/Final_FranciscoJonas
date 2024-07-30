@@ -1,5 +1,6 @@
 #include "Update.h"
-#include "Menu.h"
+
+
 
 void UpdatePlayerCellNone(Matrix matrix[MAX_ROWS][MAX_COLS], Player& player)
 {
@@ -44,15 +45,12 @@ void CheckNextCell(Matrix matrix[MAX_ROWS][MAX_COLS], Player& player)
 	}
 }
 
-void UpdatePause(Player& player)
+void UpdatePause(Player& player,SimulationStatus& simulation,MainMenu& mainMenu, MENU& menu)
 {
-	MENU menu;
-
 	switch (_getch())
 	{
 
-	case 'e':
-	case 'E':
+	case ESC:
 		system("cls");
 		player.gameOver = false;
 		simulation.pauseStatus = true;
@@ -70,7 +68,7 @@ void UpdatePause(Player& player)
 	}
 }
 
-void GameLogic(Player& player)
+void GameLogic(Player& player, DIRECTION& playerDir, Matrix matrix[MAX_ROWS][MAX_COLS])
 {
 	switch (playerDir)
 	{

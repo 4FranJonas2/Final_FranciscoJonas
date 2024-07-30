@@ -1,15 +1,16 @@
 #pragma once
 #include "GamePlay.h"
-#include <iostream>
-#include <conio.h>
-#include <Windows.h>
-#include "Menu.h"
-#include "Utils.h"
+
+DIRECTION playerDir;
+Player player;
+Matrix matrix[MAX_ROWS][MAX_COLS];
+MainMenu mainMenu;
+SimulationStatus simulation;
+MENU menu;
 
 //main loop del juego
 void GameLoop()
 {
-	
 	srand(time(0));
 	// simulation loop
 	do
@@ -18,40 +19,31 @@ void GameLoop()
 		HideCursor();
 		ChangeConsoleFont(fontSizeX, fontSizeY);
 
-		//InitCleanSpace();
-		playerSetUp(player, matrix, player.initPlayerPosX, player.initPlayerPosY);
-		matrixSetUp(matrix);
-
+		//menu loop
 		do
 		{
-			//menu loop
-			do
+			Menu(mainMenu, simulation, menu);
+
+			matrixSetUp(matrix);
+			playerSetUp(player, matrix, player.initPlayerPosX, player.initPlayerPosY, playerDir);
+			//pause loop
+			while (!simulation.pauseStatus)
 			{
-				Menu();
+				Draw(matrix, player);
 
-			} while (!mainMenu.menuOk);
-
-			Draw(matrix, player);
-
-			do
-			{
-				//pause loop
+				//gameplay loop
 				while (!player.gameOver)
 				{
-					//gameplay loop
-					InputInGame(player, matrix);
-					GameLogic(player);
+					InputInGame(player, matrix, playerDir);
+					GameLogic(player, playerDir, matrix);
 					DrawGamePlayMenu(player);
 					DrawMatrixCell(matrix, player);
 					Sleep(50);
 				}
 
-				UpdatePause(player);
-
-			} while (!simulation.pauseStatus);
-
+				UpdatePause(player, simulation, mainMenu, menu);
+			}
 		} while (!simulation.menuStatus);
-
 	} while (!simulation.endSimulation);
 }
 

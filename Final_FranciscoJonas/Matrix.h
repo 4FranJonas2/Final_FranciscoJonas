@@ -1,7 +1,5 @@
 #pragma once
-#include "Constants.h"
-
-
+#include "Utils.h"
 
 enum class CellType
 {
@@ -15,8 +13,6 @@ struct Matrix
 {
 	CellType type = CellType::NONE;
 };
-
-Matrix matrix[MAX_ROWS][MAX_COLS];
 
 void matrixSetUp(Matrix matrix[MAX_ROWS][MAX_COLS]);
 

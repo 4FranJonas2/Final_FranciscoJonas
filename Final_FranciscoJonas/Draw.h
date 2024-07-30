@@ -1,9 +1,15 @@
 #pragma once
 #include "Player.h"
 
-
-//void DrawWhiteCube(char characterToDraw);
-//void DrawOrangeCube(char characterToDraw);
+enum class MENU
+{
+	NUL,
+	PLAY,
+	RULES,
+	CREDITS,
+	EXIT,
+	PAUSE
+};
 
 void DrawPlayerCell(char characterToDraw);
 void DrawWallCell(char characterToDraw);
@@ -13,3 +19,4 @@ void DrawGamePlayMenu(Player& player);
 void Draw(Matrix matrix[MAX_ROWS][MAX_COLS], Player& auxPlayer);
 void DrawCredits();
 void DrawMainMenu();
+void DrawRules();

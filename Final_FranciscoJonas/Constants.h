@@ -5,6 +5,9 @@
 
 using namespace std;
 
+//Menu control
+const char ESC = 27;
+
 //Menu position
 const int menuPosX = 10;
 const int menuPosY = 2;

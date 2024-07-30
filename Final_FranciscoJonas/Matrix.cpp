@@ -2,6 +2,13 @@
 
 void matrixSetUp(Matrix matrix[MAX_ROWS][MAX_COLS])
 {
+	for (int i = 0; i < MAX_ROWS; i++)
+	{
+		for (int j = 0; j < MAX_COLS; j++)
+		{
+			matrix[i][j].type = CellType::NONE;
+		}
+	}
 	//seteo muros borde superior
 	for (int j = 0; j < MAX_COLS; j++)
 	{

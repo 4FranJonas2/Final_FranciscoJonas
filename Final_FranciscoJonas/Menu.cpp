@@ -1,34 +1,28 @@
 #include "Menu.h"
 
-#include <iostream>
-#include "Utils.h"
-
 using namespace std;
 
-MENU menu;
-
-void MenuLogic()
+void MenuLogic(MainMenu& mainMenu, SimulationStatus& simulation, MENU& menu)
 {
 	switch (menu)
 	{
 	case MENU::PLAY:
-		system("cls");
 		mainMenu.menuOk = true;
 		simulation.playGameOk = true;
+		simulation.pauseStatus = false;
 		break;
 
 	case MENU::RULES:
-		system("cls");
-
+		DrawRules();
 		break;
 
 	case MENU::CREDITS:
-		system("cls");
 		DrawCredits();
-		menu = MENU::NUL;
 		break;
 
 	case MENU::EXIT:
+		mainMenu.menuOk = true;
+		simulation.pauseStatus = true;
 		simulation.menuStatus = true;
 		simulation.endSimulation = true;
 		break;
@@ -38,12 +32,19 @@ void MenuLogic()
 	}
 }
 
-void Menu()
+void Menu(MainMenu& mainMenu, SimulationStatus& simulation, MENU& menu)
 {
-	Gotoxy(menuPosX, menuPosY);
+	menu = MENU::NUL;
 
-	DrawMainMenu();
-	InputInMenu();
-	MenuLogic();
+	do
+	{
+		if (menu == MENU::NUL)
+		{
+			DrawMainMenu();
+		}
+		InputInMenu(menu);
+		MenuLogic(mainMenu, simulation, menu);
+
+	} while (!mainMenu.menuOk);
 
 }
