@@ -9,20 +9,19 @@ void DrawPlayerCell(char characterToDraw)
 
 void DrawWallCell(char characterToDraw)
 {
-
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), orange);
 	cout << characterToDraw;
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), transparent);
 }
 
-void DrawColorCell(char characterToDraw)
+void DrawColorCell(int characterToDraw)
 {
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BLUE);
-	cout << characterToDraw;
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), characterToDraw);
+	cout << noneChar;
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), transparent);
 }
 
-void DrawMatrixCell(Matrix matrix[MAX_ROWS][MAX_COLS], Player& player)
+void DrawMatrixCellPlayer1(Matrix matrix[MAX_ROWS][MAX_COLS], Player& player)
 {
 	for (int i = 0; i < MAX_ROWS; i++)
 	{
@@ -34,10 +33,31 @@ void DrawMatrixCell(Matrix matrix[MAX_ROWS][MAX_COLS], Player& player)
 				DrawPlayerCell(white);
 			}
 
-			else if (matrix[i][j].type == CellType::COLOR)
+			else if (matrix[i][j].type == CellType::COLORP1)
 			{
 				Gotoxy(arenaDrawPosX + i, arenaDrawPosY + j);
 				DrawColorCell(BLUE);
+			}
+		}
+	}
+}
+
+void DrawMatrixCellPlayer2(Matrix matrix[MAX_ROWS][MAX_COLS], Player& player)
+{
+	for (int i = 0; i < MAX_ROWS; i++)
+	{
+		for (int j = 0; j < MAX_COLS; j++)
+		{
+			if (matrix[i][j].type == CellType::PLAYER)
+			{
+				Gotoxy(arenaDrawPosX + i, arenaDrawPosY + j);
+				DrawPlayerCell(white);
+			}
+
+			else if (matrix[i][j].type == CellType::COLORP2)
+			{
+				Gotoxy(arenaDrawPosX + i, arenaDrawPosY + j);
+				DrawColorCell(RED);
 			}
 		}
 	}
@@ -65,13 +85,10 @@ void DrawGamePlayMenu(Player& player)
 	cout << "  Press ESC to back MENU." << endl;
 	cout << "  Press R to RESUME game." << endl;
 	cout << "\n\n" << endl;
-
 }
 
 void Draw(Matrix matrix[MAX_ROWS][MAX_COLS], Player& auxPlayer)
 {
-	system("cls");
-
 	for (int i = 0; i < MAX_ROWS; i++)
 	{
 		for (int j = 0; j < MAX_COLS; j++)
@@ -92,7 +109,7 @@ void Draw(Matrix matrix[MAX_ROWS][MAX_COLS], Player& auxPlayer)
 				DrawWallCell(noneChar);
 				break;
 
-			case CellType::COLOR:
+			case CellType::COLORP1:
 				DrawColorCell(BLUE);
 				break;
 
@@ -105,15 +122,7 @@ void Draw(Matrix matrix[MAX_ROWS][MAX_COLS], Player& auxPlayer)
 }
 
 void DrawCredits()
-{	
-	/*string creditsMenu[MAX_ROWS] = { "      CREDITS ","Made by FRANCISCO JONAS","   FINAL INTEGRADOR"," Press ESC to go back..." };
-
-	for (int i = 0; i < MAX_ROWS; i++)
-	{
-		Gotoxy(arenaDrawPosX, arenaDrawPosY+i);
-		cout << creditsMenu[i];
-	}*/
-
+{
 	Gotoxy(0, arenaDrawPosY);
 
 	cout << "        CREDITS " << endl;
@@ -158,4 +167,15 @@ void DrawRules()
 	cout << "  If you hit a Colored line or the other player, you lose." << endl;
 	cout << "\n";
 	cout << "  Press ESC to go back..." << endl;
+}
+
+void DrawResetMenu()
+{
+	Gotoxy(0, arenaDrawPosY + MAX_COLS);
+
+	cout << "        MATCH ENDS " << endl;
+	cout << "\n\n";
+	cout << "  Press T to reset and continue playing." << endl;
+	cout << "\n";
+	cout << "  Press ESC to go back... " << endl;
 }

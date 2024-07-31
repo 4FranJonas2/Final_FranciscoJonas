@@ -1,102 +1,101 @@
 #include "Utils.h"
 
-
 void SetWindowSize()
 {
-    // Obtener el manejador de la consola
-    HANDLE hConsola = GetStdHandle(STD_OUTPUT_HANDLE);
+	// Obtener el manejador de la consola
+	HANDLE hConsola = GetStdHandle(STD_OUTPUT_HANDLE);
 
-    // Crear una estructura de tipo COORD para definir el nuevo tamaño del buffer de la consola
-    COORD nuevoTamanoBuffer = { static_cast<SHORT>(WIDTH), static_cast<SHORT>(HEIGHT) };
+	// Crear una estructura de tipo COORD para definir el nuevo tamaño del buffer de la consola
+	COORD nuevoTamanoBuffer = { static_cast<SHORT>(WIDTH), static_cast<SHORT>(HEIGHT) };
 
-    // Cambiar el tamaño del buffer
-    if (!SetConsoleScreenBufferSize(hConsola, nuevoTamanoBuffer)) {
-        std::cerr << "Error al cambiar el tamaño del buffer de la consola." << std::endl;
-        return;
-    }
+	// Cambiar el tamaño del buffer
+	if (!SetConsoleScreenBufferSize(hConsola, nuevoTamanoBuffer)) {
+		std::cerr << "Error al cambiar el tamaño del buffer de la consola." << std::endl;
+		return;
+	}
 
-    // Crear una estructura de tipo SMALL_RECT para definir el nuevo tamaño de la ventana de la consola
-    SMALL_RECT nuevoTamanoVentana = { 0, 0, static_cast<SHORT>(WIDTH - 1), static_cast<SHORT>(HEIGHT - 1) };
+	// Crear una estructura de tipo SMALL_RECT para definir el nuevo tamaño de la ventana de la consola
+	SMALL_RECT nuevoTamanoVentana = { 0, 0, static_cast<SHORT>(WIDTH - 1), static_cast<SHORT>(HEIGHT - 1) };
 
-    // Cambiar el tamaño de la ventana
-    if (!SetConsoleWindowInfo(hConsola, TRUE, &nuevoTamanoVentana)) {
-        std::cerr << "Error al cambiar el tamaño de la ventana de la consola." << std::endl;
-        return;
-    }
+	// Cambiar el tamaño de la ventana
+	if (!SetConsoleWindowInfo(hConsola, TRUE, &nuevoTamanoVentana)) {
+		std::cerr << "Error al cambiar el tamaño de la ventana de la consola." << std::endl;
+		return;
+	}
 
 }
 
 void Gotoxy(int posX, int posY)
 {
-    HANDLE hCon = GetStdHandle(STD_OUTPUT_HANDLE);
+	HANDLE hCon = GetStdHandle(STD_OUTPUT_HANDLE);
 
-    COORD dwPos;
-    dwPos.X = posX;
-    dwPos.Y = posY;
+	COORD dwPos;
+	dwPos.X = posX;
+	dwPos.Y = posY;
 
-    SetConsoleCursorPosition(hCon, dwPos);
+	SetConsoleCursorPosition(hCon, dwPos);
 }
 
 void HideCursor()
 {
-    HANDLE hCon = GetStdHandle(STD_OUTPUT_HANDLE);
+	HANDLE hCon = GetStdHandle(STD_OUTPUT_HANDLE);
 
-    CONSOLE_CURSOR_INFO cci;
-    cci.dwSize = 2;
-    cci.bVisible = false;
+	CONSOLE_CURSOR_INFO cci;
+	cci.dwSize = 2;
+	cci.bVisible = false;
 
-    SetConsoleCursorInfo(hCon, &cci);
+	SetConsoleCursorInfo(hCon, &cci);
 }
 
 bool IsCorrectInput(int& userInput)
 {
-    bool isCorrect = true;
-    cin >> userInput;
+	bool isCorrect = true;
+	cin >> userInput;
 
-    if (!cin)
-        isCorrect = false;
+	if (!cin)
+		isCorrect = false;
 
-    cin.clear();
-    cin.ignore(INT_MAX, '\n');
+	cin.clear();
+	cin.ignore(INT_MAX, '\n');
 
-    return isCorrect;
+	return isCorrect;
 }
 
 bool IsCorrectInput(char& userInput)
 {
-    bool isCorrect = true;
-    cin >> userInput;
+	bool isCorrect = true;
+	cin >> userInput;
 
-    if (!cin)
-        isCorrect = false;
+	if (!cin)
+		isCorrect = false;
 
-    cin.clear();
-    cin.ignore(INT_MAX, '\n');
+	cin.clear();
+	cin.ignore(INT_MAX, '\n');
 
-    return isCorrect;
+	return isCorrect;
 }
 
 bool IsCorrectInput(string& userInput)
 {
-    cin >> userInput;
+	cin >> userInput;
 
-    cin.clear();
-    cin.ignore(INT_MAX, '\n');
+	cin.clear();
+	cin.ignore(INT_MAX, '\n');
 
-    return true;
+	return true;
 }
 
 void ChangeConsoleFont(int sizeX, int sizeY)
 {
-    CONSOLE_FONT_INFOEX cfi;
-    cfi.cbSize = sizeof(cfi);
-    cfi.nFont = 0;
+	CONSOLE_FONT_INFOEX cfi;
+	cfi.cbSize = sizeof(cfi);
+	cfi.nFont = 0;
 
-    cfi.dwFontSize.X = sizeX;
-    cfi.dwFontSize.Y = sizeY;
-    cfi.FontFamily = FF_DONTCARE;
-    cfi.FontWeight = FW_NORMAL;
+	cfi.dwFontSize.X = sizeX;
+	cfi.dwFontSize.Y = sizeY;
+	cfi.FontFamily = FF_DONTCARE;
+	cfi.FontWeight = FW_NORMAL;
 
-    SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
+	SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
 }
 

@@ -5,7 +5,8 @@ enum class CellType
 {
 	NONE = 1,
 	PLAYER,
-	COLOR,
+	COLORP1,
+	COLORP2,
 	WALL
 };
 

@@ -11,14 +11,18 @@ enum class DIRECTION
 	DOWN
 };
 
-
 struct Player
 {
-	//position
+	//position player 1
 	int posX = 0;
 	int posY = 0;
 	int nextPosX = 0;
 	int nextPosY = 0;
+	//position player 2
+	int posP2X = 0;
+	int posP2Y = 0;
+	int nextPosP2X = 0;
+	int nextPosP2Y = 0;
 	//stats
 	char playerName = 0;
 	int points = 0;
@@ -31,9 +35,12 @@ struct Player
 	//spawns
 	int initPlayerPosX = 2;
 	int initPlayerPosY = 2;
+	int initPlayer2PosX = (MAX_ROWS - 3);
+	int initPlayer2PosY = (MAX_COLS - 3);
 	//playerstatus
 	bool gameOver = false;
+	bool playerIsAlive = true;
+	bool player2IsAlive = true;
 };
-
 
 Player playerSetUp(Player& auxPlayer, Matrix matrix[MAX_ROWS][MAX_COLS], int spawnPosX, int spawnPosY, DIRECTION& playerDir);

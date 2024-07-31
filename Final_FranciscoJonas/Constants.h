@@ -20,10 +20,6 @@ const int HEIGHT = 50;
 const int MAX_ROWS = 40;
 const int MAX_COLS = 20;
 
-//cleaner size
-const int CLEAN_ROWS = 30;
-const int CLEAN_COLS = 30;
-
 //arena draw position
 const int arenaDrawPosX = 40;
 const int arenaDrawPosY = 5;
@@ -32,7 +28,7 @@ const int arenaDrawPosY = 5;
 const int white = 255;
 const int orange = 97;
 const int transparent = 7;
-const int GREEN = 42;
+const int RED = 204;
 const int BLUE = 153;
 
 //font

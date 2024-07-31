@@ -16,7 +16,12 @@ struct MainMenu
 };
 
 void UpdatePlayerCellNone(Matrix matrix[MAX_ROWS][MAX_COLS], Player& player);
+void UpdatePlayer2CellNone(Matrix matrix[MAX_ROWS][MAX_COLS], Player& player);
 void UpdatePlayerCellWall(Matrix matrix[MAX_ROWS][MAX_COLS], Player& player);
-void CheckNextCell(Matrix matrix[MAX_ROWS][MAX_COLS], Player& player);
-void UpdatePause(Player& player, SimulationStatus& simulation, MainMenu& mainMenu, MENU& menu);
-void GameLogic(Player& player, DIRECTION& playerDir, Matrix matrix[MAX_ROWS][MAX_COLS]);
+void CheckNextCellPlayer1(Matrix matrix[MAX_ROWS][MAX_COLS], Player& player);
+void CheckNextCellPlayer2(Matrix matrix[MAX_ROWS][MAX_COLS], Player& player);
+void UpdatePause(Player& player, Player& player2, SimulationStatus& simulation, MainMenu& mainMenu, MENU& menu);
+void UpdateTryAgain(Player& player, Player& player2, SimulationStatus& simulation, MainMenu& mainMenu, MENU& menu, Matrix matrix[MAX_ROWS][MAX_COLS], DIRECTION playerDir, DIRECTION playerDir2);
+void GameLogicpPayer1(Player& player, DIRECTION& playerDir, Matrix matrix[MAX_ROWS][MAX_COLS]);
+void GameLogicpPayer2(Player& player, DIRECTION& playerDir, Matrix matrix[MAX_ROWS][MAX_COLS]);
+
