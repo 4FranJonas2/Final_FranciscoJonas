@@ -1,5 +1,4 @@
 #pragma once
-#include "Utils.h"
 
 enum class CellType
 {
@@ -15,5 +14,12 @@ struct Matrix
 	CellType type = CellType::NONE;
 };
 
-void matrixSetUp(Matrix matrix[MAX_ROWS][MAX_COLS]);
-
+namespace gameMatrix
+{
+	void MatrixInit(Matrix matrix[][MAX_COLS]);
+	void DrawPlayerCell(char characterToDraw);
+	void DrawWallCell(char characterToDraw);
+	void DrawColorCell(int characterToDraw);
+	void DrawCellPlayer(Matrix matrix[][MAX_COLS]);
+	void DrawMatrix(Matrix matrix[][MAX_COLS]);
+}

@@ -1,35 +1,125 @@
 #include "Matrix.h"
 
-void matrixSetUp(Matrix matrix[MAX_ROWS][MAX_COLS])
+#include "Utils.h"
+
+namespace gameMatrix
 {
-	for (int i = 0; i < MAX_ROWS; i++)
+	void MatrixInit(Matrix matrix[][MAX_COLS])
 	{
+		for (int i = 0; i < MAX_ROWS; i++)
+		{
+			for (int j = 0; j < MAX_COLS; j++)
+			{
+				matrix[i][j].type = CellType::NONE;
+			}
+		}
+
+		//seteo muros borde superior
 		for (int j = 0; j < MAX_COLS; j++)
 		{
-			matrix[i][j].type = CellType::NONE;
+			matrix[0][j].type = CellType::WALL;
+		}
+
+		//seteo muros borde inferior
+		for (int j = 0; j < MAX_COLS; j++)
+		{
+			matrix[MAX_ROWS - 1][j].type = CellType::WALL;
+		}
+
+		//seteo muros izquierda
+		for (int i = 0; i < MAX_ROWS; i++)
+		{
+			matrix[i][0].type = CellType::WALL;
+		}
+
+		//seteo muros derecha
+		for (int i = 0; i < MAX_ROWS; i++)
+		{
+			matrix[i][MAX_COLS - 1].type = CellType::WALL;
 		}
 	}
-	//seteo muros borde superior
-	for (int j = 0; j < MAX_COLS; j++)
-	{
-		matrix[0][j].type = CellType::WALL;
-	}
 
-	//seteo muros borde inferior
-	for (int j = 0; j < MAX_COLS; j++)
+	void DrawPlayerCell(char characterToDraw)
 	{
-		matrix[MAX_ROWS - 1][j].type = CellType::WALL;
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), white);
+		cout << characterToDraw;
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), transparent);
 	}
-
-	//seteo muros izquierda
-	for (int i = 0; i < MAX_ROWS; i++)
+	void DrawWallCell(char characterToDraw)
 	{
-		matrix[i][0].type = CellType::WALL;
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), orange);
+		cout << characterToDraw;
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), transparent);
 	}
-
-	//seteo muros derecha
-	for (int i = 0; i < MAX_ROWS; i++)
+	void DrawColorCell(int characterToDraw)
 	{
-		matrix[i][MAX_COLS - 1].type = CellType::WALL;
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), characterToDraw);
+		cout << noneChar;
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), transparent);
+	}
+	void DrawCellPlayer(Matrix matrix[][MAX_COLS])
+	{
+		for (int i = 0; i < MAX_ROWS; i++)
+		{
+			for (int j = 0; j < MAX_COLS; j++)
+			{
+				if (matrix[i][j].type == CellType::PLAYER)
+				{
+					Gotoxy(arenaDrawPosX + i, arenaDrawPosY + j);
+					DrawPlayerCell(white);
+				}
+
+				else if (matrix[i][j].type == CellType::COLORP1)
+				{
+					Gotoxy(arenaDrawPosX + i, arenaDrawPosY + j);
+					DrawColorCell(BLUE);
+				}
+
+				//if (matrix[i][j].type == CellType::PLAYER)
+				//{
+				//	Gotoxy(arenaDrawPosX + i, arenaDrawPosY + j);
+				//	DrawPlayerCell(white);
+				//}
+
+				//else if (matrix[i][j].type == CellType::COLORP2)
+				//{
+				//	Gotoxy(arenaDrawPosX + i, arenaDrawPosY + j);
+				//	DrawColorCell(RED);
+				//}
+			}
+		}
+	}
+	void DrawMatrix(Matrix matrix[][MAX_COLS])
+	{
+		for (int i = 0; i < MAX_ROWS; i++)
+		{
+			for (int j = 0; j < MAX_COLS; j++)
+			{
+				Gotoxy(arenaDrawPosX + i, arenaDrawPosY + j);
+
+				switch (matrix[i][j].type)
+				{
+				case CellType::NONE:
+					cout << " ";
+					break;
+
+				case CellType::PLAYER:
+					DrawPlayerCell(playerChar);
+					break;
+
+				case CellType::WALL:
+					DrawWallCell(noneChar);
+					break;
+
+				case CellType::COLORP1:
+					DrawColorCell(BLUE);
+					break;
+
+				default:
+					break;
+				}
+			}
+			cout << endl;
+		}
 	}
 }

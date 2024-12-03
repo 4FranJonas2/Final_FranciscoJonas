@@ -1,6 +1,16 @@
 #pragma once
 
+#include "Player.h"
 #include "Menu.h"
 
-void GameLoop();
+namespace gamePlay
+{
+	void GameLoop();
+	void Init();
+	void Input();
+	void Update();
+	void Draw();
+}
+
+
 

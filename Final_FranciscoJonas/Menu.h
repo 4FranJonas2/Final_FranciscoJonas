@@ -1,5 +1,15 @@
 #pragma once
-#include "Input.h"
 
-void MenuLogic(MainMenu& mainMenu, SimulationStatus& simulation, MENU& menu);
-void Menu(MainMenu& mainMenu, SimulationStatus& simulation, MENU& menu);
+#include "Utils.h"
+
+namespace gameMenus
+{
+	void Input();
+	void Update(SCENEMANAGER& simStat);
+	void Draw(SCENEMANAGER simStat);
+	
+	void DrawCredits();
+	void DrawMainMenu();
+	void DrawRules();
+	void DrawResetMenu();
+}

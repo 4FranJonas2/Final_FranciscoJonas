@@ -2,6 +2,19 @@
 #include <iostream>
 #include "Constants.h"
 
+enum class SCENEMANAGER
+{
+	NONE,
+	MENU,
+	PLAY,
+	CREDITS,
+	RULES,
+	RESET,
+	RESUME,
+	WINLOSE,
+	EXIT
+};
+
 void SetWindowSize();
 
 void Gotoxy(int posX, int posY);

@@ -36,4 +36,3 @@ const int fontSizeX = 10;
 const int fontSizeY = 15;
 const char noneChar = ' ';
 const char playerChar = ' ';
-
