@@ -1,11 +1,14 @@
 #include "Matrix.h"
 
-#include "Utils.h"
-
 namespace gameMatrix
 {
-	void MatrixInit(Matrix matrix[][MAX_COLS])
+	void InitMatrix(Matrix matrix[][MAX_COLS], Vector2 playerPos)
 	{
+		int playerPosX = playerPos.x;
+		int playerPosY = playerPos.y;
+
+		matrix[playerPosX][playerPosY].type = CellType::PLAYER;
+
 		for (int i = 0; i < MAX_ROWS; i++)
 		{
 			for (int j = 0; j < MAX_COLS; j++)
