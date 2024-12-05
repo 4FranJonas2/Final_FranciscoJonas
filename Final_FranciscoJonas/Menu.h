@@ -4,12 +4,12 @@
 
 namespace gameMenus
 {
-	void Input();
-	void Update(SCENEMANAGER& simStat);
-	void Draw(SCENEMANAGER simStat);
+	void UpdateMainMenu(SCENEMANAGER& simStat);
+	void UpdateInGameMenu(SCENEMANAGER& simStat, bool& endGame);
 	
 	void DrawCredits();
 	void DrawMainMenu();
 	void DrawRules();
-	void DrawResetMenu();
+	void DrawWinLoseMenu();
+	void DrawPause();
 }

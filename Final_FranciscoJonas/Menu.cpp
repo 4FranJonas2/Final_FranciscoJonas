@@ -4,11 +4,7 @@ using namespace std;
 
 namespace gameMenus
 {
-	void Input()
-	{
-
-	}
-	void Update(SCENEMANAGER& simStat)
+	void UpdateMainMenu(SCENEMANAGER& simStat)
 	{
 		if (_kbhit())
 		{
@@ -21,22 +17,29 @@ namespace gameMenus
 
 			case '2':
 				system("cls");
-				simStat = SCENEMANAGER::PLAY;
+				simStat = SCENEMANAGER::RULES;
 				break;
 
 			case '3':
 				system("cls");
-				simStat = SCENEMANAGER::PLAY;
+				simStat = SCENEMANAGER::CREDITS;
 				break;
 
 			case '4':
 				system("cls");
-				simStat = SCENEMANAGER::PLAY;
+				simStat = SCENEMANAGER::EXIT;
 				break;
 
 			case ESC:
 				system("cls");
-				simStat = SCENEMANAGER::PLAY;
+				if (simStat == SCENEMANAGER::PLAY)
+				{
+					simStat = SCENEMANAGER::PAUSE;
+				}
+				if (simStat==SCENEMANAGER::CREDITS || simStat == SCENEMANAGER::RULES)
+				{
+					simStat = SCENEMANAGER::MENU;
+				}
 				break;
 
 			default:
@@ -44,37 +47,62 @@ namespace gameMenus
 			}
 		}
 	}
-	void Draw(SCENEMANAGER simStat)
+	void UpdateInGameMenu(SCENEMANAGER& simStat, bool& endGame)
 	{
-		switch (simStat)
+		//Pause Menu
+		if (simStat == SCENEMANAGER::PAUSE)
 		{
-		case SCENEMANAGER::NONE:
-			break;
-		case SCENEMANAGER::MENU:
-			DrawMainMenu();
-			break;
-		case SCENEMANAGER::PLAY:
-			break;
-		case SCENEMANAGER::CREDITS:
-			DrawCredits();
-			break;
-		case SCENEMANAGER::RULES:
-			DrawRules();
-			break;
-		case SCENEMANAGER::RESET:
-			break;
-		case SCENEMANAGER::RESUME:
-			break;
-		case SCENEMANAGER::WINLOSE:
-			DrawResetMenu();
-			break;
-		case SCENEMANAGER::EXIT:
-			break;
-		default:
-			break;
+			if (_kbhit())
+			{
+				switch (_getch())
+				{
+				case ESC:
+					system("cls");
+					simStat = SCENEMANAGER::RESUME;
+					break;
+
+				case '2':
+					system("cls");
+					simStat = SCENEMANAGER::RESET;
+					break;
+
+				case '3':
+					system("cls");
+					simStat = SCENEMANAGER::MENU;
+					break;
+				default:
+					break;
+				}
+			}
 		}
+
+		//WinLoseMenu
+		/*if (simStat == SCENEMANAGER::PAUSE)
+		{
+			if (_kbhit())
+			{
+				switch (_getch())
+				{
+				case ESC:
+					system("cls");
+					simStat = SCENEMANAGER::RESUME;
+					break;
+
+				case '2':
+					system("cls");
+					simStat = SCENEMANAGER::RESET;
+					break;
+
+				case '3':
+					system("cls");
+					simStat = SCENEMANAGER::MENU;
+					break;
+				default:
+					break;
+				}
+			}
+		}*/
 	}
-	
 	void DrawCredits()
 	{
 		Gotoxy(0, arenaDrawPosY);
@@ -120,7 +148,7 @@ namespace gameMenus
 		cout << "\n";
 		cout << "  Press ESC to go back..." << endl;
 	}
-	void DrawResetMenu()
+	void DrawWinLoseMenu()
 	{
 		Gotoxy(0, arenaDrawPosY + MAX_COLS);
 
@@ -129,5 +157,18 @@ namespace gameMenus
 		cout << "  Press T to reset and continue playing." << endl;
 		cout << "\n";
 		cout << "  Press ESC to go back... " << endl;
+	}
+	void DrawPause()
+	{
+		Gotoxy(menuPosX, menuPosY);
+
+		cout << "      GAME PAUSE" << endl;
+		cout << "\n\n";
+		cout << "  ESC.  RESUME " << endl;
+		cout << "\n";
+		cout << "  2.  RESET " << endl;
+		cout << "\n";
+		cout << "  3. BACK TO MENU " << endl;
+		cout << "\n\n";
 	}
 }
