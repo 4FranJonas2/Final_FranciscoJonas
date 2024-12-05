@@ -9,10 +9,17 @@ enum class SCENEMANAGER
 	PLAY,
 	CREDITS,
 	RULES,
+	PAUSE,
 	RESET,
 	RESUME,
 	WINLOSE,
 	EXIT
+};
+
+struct Vector2
+{
+	float x;
+	float y;
 };
 
 void SetWindowSize();
