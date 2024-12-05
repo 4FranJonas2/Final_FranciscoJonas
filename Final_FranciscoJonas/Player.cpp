@@ -2,8 +2,7 @@
 
 namespace gamePlayer
 {
-	Player InitPlayer(Player& auxPlayer, Matrix matrix[][MAX_COLS],
-		int spawnPosX, int spawnPosY, DIRECTION& playerDir)
+	Player InitPlayer(Player& auxPlayer, DIRECTION& playerDir)
 	{
 		auxPlayer.gameOver = false;
 		bool pauseStatus = false;
@@ -13,16 +12,14 @@ namespace gamePlayer
 		playerDir = DIRECTION::STOP;
 
 		//spawn point
-		auxPlayer.nextPosX = spawnPosX;
-		auxPlayer.nextPosY = spawnPosY;
+		auxPlayer.nextPosX = auxPlayer.spawnPos.x;
+		auxPlayer.nextPosY = auxPlayer.spawnPos.y;
 		auxPlayer.posX = auxPlayer.nextPosX;
 		auxPlayer.posY = auxPlayer.nextPosY;
 
-		matrix[auxPlayer.posX][auxPlayer.posY].type = CellType::PLAYER;
-
 		return auxPlayer;
 	}
-	void InputPlayer1(Player& player, Matrix matrix[][MAX_COLS], DIRECTION& playerDir)
+	void InputPlayer(Player& player, DIRECTION& playerDir)
 	{
 		if (_kbhit())
 		{
@@ -60,7 +57,7 @@ namespace gamePlayer
 
 		}
 	}
-	void GameLogicpPayer1(Player& player, DIRECTION& playerDir, Matrix matrix[][MAX_COLS])
+	void UpdatePlayer(Player& player, DIRECTION& playerDir)
 	{
 		switch (playerDir)
 		{
@@ -69,70 +66,23 @@ namespace gamePlayer
 
 		case DIRECTION::LEFT:
 			player.nextPosX--;
-			CheckNextCellPlayer1(matrix, player);
 			break;
 
 		case DIRECTION::RIGHT:
 			player.nextPosX++;
-			CheckNextCellPlayer1(matrix, player);
 			break;
 
 		case DIRECTION::UP:
 			player.nextPosY--;
-			CheckNextCellPlayer1(matrix, player);
 			break;
 
 		case DIRECTION::DOWN:
 			player.nextPosY++;
-			CheckNextCellPlayer1(matrix, player);
 			break;
 
 		default:
 			break;
 		}
-	}
-	void CheckNextCellPlayer(Matrix matrix[][MAX_COLS], Player& player)
-	{
-		if (matrix[player.nextPosX][player.nextPosY].type == CellType::NONE)
-		{
-			player.cellColored++;
-			UpdatePlayerCellNone(matrix, player);
-		}
-
-		else if (matrix[player.nextPosX][player.nextPosY].type == CellType::WALL)
-		{
-			UpdatePlayerCellWall(matrix, player);
-		}
-
-		else if (matrix[player.nextPosX][player.nextPosY].type == CellType::COLORP1 || matrix[player.nextPosX][player.nextPosY].type == CellType::COLORP2)
-		{
-			player.gameOver = true;
-			player.playerIsAlive = false;
-			player.MatchesLost++;
-		}
-
-		else if (matrix[player.nextPosX][player.nextPosY].type == CellType::PLAYER)
-		{
-			player.gameOver = true;
-			player.MatchesLost++;
-		}
-	}
-	void UpdatePlayerCellNone(Matrix matrix[][MAX_COLS], Player& player)
-	{
-		matrix[player.posX][player.posY].type = CellType::COLORP1;
-		//matrix[player.posX][player.posY].type = CellType::COLORP2;
-		player.posX = player.nextPosX;
-		player.posY = player.nextPosY;
-		matrix[player.posX][player.posY].type = CellType::PLAYER;
-	}
-	void UpdatePlayerCellWall(Matrix matrix[][MAX_COLS], Player& player)
-	{
-		matrix[player.posX][player.posY].type = CellType::PLAYER;
-		player.nextPosX = player.posX;
-		player.nextPosY = player.posY;
-		player.posX = player.nextPosX;
-		player.posY = player.nextPosY;
-		matrix[player.posX][player.posY].type = CellType::PLAYER;
 	}
 	void DrawGamePlayUI(Player& player)
 	{

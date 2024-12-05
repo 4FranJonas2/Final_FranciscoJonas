@@ -37,6 +37,7 @@ namespace gamePlayer
 		int MatchesWon = 0;
 		int MatchesLost = 0;
 		//spawns
+		Vector2 spawnPos;
 		int initPlayerPosX = 2;
 		int initPlayerPosY = 2;
 		int initPlayer2PosX = (MAX_ROWS - 3);
@@ -47,12 +48,8 @@ namespace gamePlayer
 		bool player2IsAlive = true;
 	};
 
-	Player InitPlayer(Player& auxPlayer, Matrix matrix[][MAX_COLS], int spawnPosX,
-		int spawnPosY, DIRECTION& playerDir);
-	void InputPlayer1(Player& player, Matrix matrix[][MAX_COLS], DIRECTION& playerDir);
-	void GameLogicpPayer1(Player& player, DIRECTION& playerDir, Matrix matrix[][MAX_COLS]);
-	void CheckNextCellPlayer(Matrix matrix[][MAX_COLS], Player& player);
-	void UpdatePlayerCellNone(Matrix matrix[][MAX_COLS], Player& player);
-	void UpdatePlayerCellWall(Matrix matrix[][MAX_COLS], Player& player);
+	Player InitPlayer(Player& auxPlayer, DIRECTION& playerDir);
+	void InputPlayer(Player& player, DIRECTION& playerDir);
+	void UpdatePlayer(Player& player, DIRECTION& playerDir);
 	void DrawGamePlayUI(Player& player);
 }
