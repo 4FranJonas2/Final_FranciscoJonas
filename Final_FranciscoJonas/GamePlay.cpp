@@ -1,13 +1,18 @@
 #pragma once
 #include "GamePlay.h"
 
+#include "ColissionManager.h"
+#include "Utils.h"
+#include "Menu.h"
+
+
 namespace gamePlay
 {
-	DIRECTION playerDir;
-	DIRECTION playerDir2;
-	Player player;
-	Player player2;
-	Matrix matrix[MAX_ROWS][MAX_COLS];
+	gamePlayer::DIRECTION playerDir;
+	gamePlayer::DIRECTION playerDir2;
+	gamePlayer::Player player;
+	gamePlayer::Player player2;
+	gameMatrix::Matrix matrix[MAX_ROWS][MAX_COLS];
 	SCENEMANAGER simStat;
 
 	//main loop del juego
@@ -23,32 +28,6 @@ namespace gamePlay
 			Update();
 			Draw();
 		}
-
-
-
-		//pause loop
-		while (!simulation.pauseStatus)
-		{
-			
-
-			//gameplay loop
-			while (!player.gameOver && !player2.gameOver)
-			{
-
-
-
-			}
-
-			if (!player.playerIsAlive || !player2.player2IsAlive)
-			{
-			}
-			else
-			{
-				UpdatePause(player, player2, simulation, mainMenu, menu);
-			}
-		}
-
-
 	}
 
 
@@ -57,10 +36,9 @@ namespace gamePlay
 		//SetWindowSize();
 		HideCursor();
 		ChangeConsoleFont(fontSizeX, fontSizeY);
-		matrixSetUp(matrix);
-		playerSetUp(player, matrix, player.initPlayerPosX, player.initPlayerPosY, playerDir);
-		playerSetUp(player2, matrix, player2.initPlayer2PosX, player2.initPlayer2PosY, playerDir2);
-
+		gameMatrix::InitMatrix(matrix, player.spawnPos);
+		gamePlayer::InitPlayer(player, playerDir);
+		gamePlayer::InitPlayer(player2, playerDir);
 	}
 	void Input()
 	{
@@ -69,12 +47,13 @@ namespace gamePlay
 		case SCENEMANAGER::NONE:
 			break;
 		case SCENEMANAGER::MENU:
+			
 			break;
 		case SCENEMANAGER::CREDITS:
 			break;
 		case SCENEMANAGER::PLAY:
-			InputPlayer1(player, matrix, playerDir);
-			InputPlayer2(player2, matrix, playerDir2);
+			gamePlayer::InputPlayer(player, playerDir);
+			gamePlayer::InputPlayer(player2, playerDir2);
 			break;
 		case SCENEMANAGER::RESET:
 			break;
@@ -95,19 +74,27 @@ namespace gamePlay
 		case SCENEMANAGER::NONE:
 			break;
 		case SCENEMANAGER::MENU:
-			break;
-		case SCENEMANAGER::CREDITS:
+			gameMenus::UpdateMainMenu(simStat);
 			break;
 		case SCENEMANAGER::PLAY:
-			GameLogicpPayer1(player, playerDir, matrix);
-			GameLogicpPayer2(player2, playerDir2, matrix);
+			gameMenus::UpdateInGameMenu(simStat,player.gameOver);
+			gamePlayer::UpdatePlayer(player, playerDir);
+			gamePlayer::UpdatePlayer(player2, playerDir2);
+			break;
+		case SCENEMANAGER::CREDITS:
+			gameMenus::UpdateMainMenu(simStat);
+			break;
+		case SCENEMANAGER::RULES:
+			gameMenus::UpdateMainMenu(simStat);
+			break;
+		case SCENEMANAGER::PAUSE:
+			gameMenus::UpdateInGameMenu(simStat, player.gameOver);
 			break;
 		case SCENEMANAGER::RESET:
 			break;
 		case SCENEMANAGER::RESUME:
 			break;
 		case SCENEMANAGER::WINLOSE:
-			UpdateTryAgain(player, player2, simulation, matrix, playerDir, playerDir2);
 
 			break;
 		case SCENEMANAGER::EXIT:
