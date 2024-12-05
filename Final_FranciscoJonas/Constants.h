@@ -5,6 +5,9 @@
 
 using namespace std;
 
+//simControl
+const bool simEnd = false;
+
 //Menu control
 const char ESC = 27;
 
