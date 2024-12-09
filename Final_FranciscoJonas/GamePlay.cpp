@@ -18,7 +18,7 @@ namespace gamePlay
 	//main loop del juego
 	void GameLoop()
 	{
-		srand(time(0));
+		srand(time(NULL));
 		// simulation loop
 		Init();
 
@@ -30,26 +30,24 @@ namespace gamePlay
 		}
 	}
 
-
 	void Init()
 	{
+		bool isPlayer1;
 		//SetWindowSize();
 		HideCursor();
 		ChangeConsoleFont(fontSizeX, fontSizeY);
 		gameMatrix::InitMatrix(matrix, player.spawnPos);
-		gamePlayer::InitPlayer(player, playerDir);
-		gamePlayer::InitPlayer(player2, playerDir);
+		isPlayer1 = true;
+		gamePlayer::InitPlayer(player, playerDir, isPlayer1);
+		isPlayer1 = false;
+		gamePlayer::InitPlayer(player2, playerDir, isPlayer1);
+		simStat = SCENEMANAGER::MENU;
 	}
 	void Input()
 	{
 		switch (simStat)
 		{
 		case SCENEMANAGER::NONE:
-			break;
-		case SCENEMANAGER::MENU:
-			
-			break;
-		case SCENEMANAGER::CREDITS:
 			break;
 		case SCENEMANAGER::PLAY:
 			gamePlayer::InputPlayer(player, playerDir);
@@ -60,8 +58,6 @@ namespace gamePlay
 		case SCENEMANAGER::RESUME:
 			break;
 		case SCENEMANAGER::WINLOSE:
-			break;
-		case SCENEMANAGER::EXIT:
 			break;
 		default:
 			break;
@@ -78,7 +74,9 @@ namespace gamePlay
 			break;
 		case SCENEMANAGER::PLAY:
 			gameMenus::UpdateInGameMenu(simStat,player.gameOver);
-			gamePlayer::UpdatePlayer(player, playerDir);
+			gameColision::CheckNextCellPlayer(matrix, player);
+			gameColision::CheckNextCellPlayer(matrix, player2);
+			gamePlayer::UpdatePlayer(player, playerDir);	
 			gamePlayer::UpdatePlayer(player2, playerDir2);
 			break;
 		case SCENEMANAGER::CREDITS:
@@ -98,6 +96,7 @@ namespace gamePlay
 
 			break;
 		case SCENEMANAGER::EXIT:
+			gameMenus::UpdateMainMenu(simStat);
 			break;
 		default:
 			break;
@@ -110,15 +109,23 @@ namespace gamePlay
 		case SCENEMANAGER::NONE:
 			break;
 		case SCENEMANAGER::MENU:
+			gameMenus::DrawMainMenu();
 			break;
 		case SCENEMANAGER::CREDITS:
+			gameMenus::DrawCredits();
+			break;
+		case SCENEMANAGER::RULES:
+			gameMenus::DrawRules();
 			break;
 		case SCENEMANAGER::PLAY:
-			Draw(matrix, player);
-			DrawGamePlayMenu(player);
-			DrawGamePlayMenu(player);
-			DrawMatrixCellPlayer1(matrix, player);
-			DrawMatrixCellPlayer2(matrix, player2);
+			//Draw(matrix, player);
+			gamePlayer::DrawGamePlayUI(player);
+			gameMatrix::DrawMatrix(matrix);
+			gameMatrix::DrawPlayer(playerChar);
+			gameMatrix::DrawWallCell(noneChar);
+			//gameMatrix::DrawColorCell(player.cellColored.)
+			gameMatrix::DrawCellPlayer(matrix);
+			gameMatrix::DrawCellPlayer(matrix);
 			Sleep(50);
 			break;
 		case SCENEMANAGER::RESET:
@@ -126,9 +133,10 @@ namespace gamePlay
 		case SCENEMANAGER::RESUME:
 			break;
 		case SCENEMANAGER::WINLOSE:
-			DrawResetMenu();
+			gameMenus::DrawWinLoseMenu();
 			break;
 		case SCENEMANAGER::EXIT:
+			gameMenus::DrawExitMenu();
 			break;
 		default:
 			break;
