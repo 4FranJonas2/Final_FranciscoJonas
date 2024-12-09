@@ -12,14 +12,22 @@ namespace gameMenus
 			{
 			case '1':
 				system("cls");
-				simStat = SCENEMANAGER::PLAY;
+				if (simStat == SCENEMANAGER::EXIT)
+				{
+					simStat = SCENEMANAGER::NONE;
+				}
+				else
+					simStat = SCENEMANAGER::PLAY;
 				break;
-
 			case '2':
 				system("cls");
-				simStat = SCENEMANAGER::RULES;
+				if (simStat == SCENEMANAGER::EXIT)
+				{
+					simStat = SCENEMANAGER::MENU;
+				}
+				else
+					simStat = SCENEMANAGER::RULES;
 				break;
-
 			case '3':
 				system("cls");
 				simStat = SCENEMANAGER::CREDITS;
@@ -29,7 +37,6 @@ namespace gameMenus
 				system("cls");
 				simStat = SCENEMANAGER::EXIT;
 				break;
-
 			case ESC:
 				system("cls");
 				if (simStat == SCENEMANAGER::PLAY)
@@ -145,7 +152,7 @@ namespace gameMenus
 		cout << "  Won by making your opponent crash into your line or theirs " << endl;
 		cout << "\n";
 		cout << "  If you hit a Colored line or the other player, you lose." << endl;
-		cout << "\n";
+		cout << "\n\n";
 		cout << "  Press ESC to go back..." << endl;
 	}
 	void DrawWinLoseMenu()
@@ -170,5 +177,15 @@ namespace gameMenus
 		cout << "\n";
 		cout << "  3. BACK TO MENU " << endl;
 		cout << "\n\n";
+	}
+	void DrawExitMenu()
+	{
+		Gotoxy(0, arenaDrawPosY);
+
+		cout << "                 EXIT " << endl;
+		cout << "\n\n";
+		cout << "  Are you sure you want to leave de game ?" << endl;
+		cout << "\n";
+		cout << "     1. YES               2. NO " << endl;
 	}
 }

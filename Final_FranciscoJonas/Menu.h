@@ -12,4 +12,5 @@ namespace gameMenus
 	void DrawRules();
 	void DrawWinLoseMenu();
 	void DrawPause();
+	void DrawExitMenu();
 }
