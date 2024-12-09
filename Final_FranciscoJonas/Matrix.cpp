@@ -42,7 +42,7 @@ namespace gameMatrix
 		}
 	}
 
-	void DrawPlayerCell(char characterToDraw)
+	void DrawPlayer(char characterToDraw)
 	{
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), white);
 		cout << characterToDraw;
@@ -69,7 +69,7 @@ namespace gameMatrix
 				if (matrix[i][j].type == CellType::PLAYER)
 				{
 					Gotoxy(arenaDrawPosX + i, arenaDrawPosY + j);
-					DrawPlayerCell(white);
+					DrawPlayer(white);
 				}
 
 				else if (matrix[i][j].type == CellType::COLORP1)
@@ -107,7 +107,7 @@ namespace gameMatrix
 					break;
 
 				case CellType::PLAYER:
-					DrawPlayerCell(playerChar);
+					DrawPlayer(playerChar);
 					break;
 
 				case CellType::WALL:

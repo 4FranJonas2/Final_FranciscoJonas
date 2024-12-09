@@ -20,7 +20,7 @@ namespace gameMatrix
 
 	void InitMatrix(Matrix matrix[][MAX_COLS], Vector2 playerPos);
 
-	void DrawPlayerCell(char characterToDraw);
+	void DrawPlayer(char characterToDraw);
 	void DrawWallCell(char characterToDraw);
 	void DrawColorCell(int characterToDraw);
 	void DrawCellPlayer(Matrix matrix[][MAX_COLS]);
