@@ -38,17 +38,14 @@ namespace gamePlayer
 		int MatchesLost = 0;
 		//spawns
 		Vector2 spawnPos;
-		int initPlayerPosX = 2;
-		int initPlayerPosY = 2;
-		int initPlayer2PosX = (MAX_ROWS - 3);
-		int initPlayer2PosY = (MAX_COLS - 3);
+		
 		//playerstatus
 		bool gameOver = false;
 		bool playerIsAlive = true;
 		bool player2IsAlive = true;
 	};
 
-	Player InitPlayer(Player& auxPlayer, DIRECTION& playerDir);
+	Player InitPlayer(Player& auxPlayer, DIRECTION& playerDir, bool isFirstPlayer);
 	void InputPlayer(Player& player, DIRECTION& playerDir);
 	void UpdatePlayer(Player& player, DIRECTION& playerDir);
 	void DrawGamePlayUI(Player& player);

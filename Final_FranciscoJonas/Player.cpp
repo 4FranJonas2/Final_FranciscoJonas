@@ -2,7 +2,7 @@
 
 namespace gamePlayer
 {
-	Player InitPlayer(Player& auxPlayer, DIRECTION& playerDir)
+	Player InitPlayer(Player& auxPlayer, DIRECTION& playerDir, bool isFirstPlayer)
 	{
 		auxPlayer.gameOver = false;
 		bool pauseStatus = false;
@@ -12,6 +12,17 @@ namespace gamePlayer
 		playerDir = DIRECTION::STOP;
 
 		//spawn point
+		if (isFirstPlayer)
+		{
+			auxPlayer.spawnPos.x = initPlayerPosX;
+			auxPlayer.spawnPos.y = initPlayerPosY;
+		}
+		else
+		{
+			auxPlayer.spawnPos.x = initPlayer2PosX;
+			auxPlayer.spawnPos.y = initPlayer2PosY;
+		}
+
 		auxPlayer.nextPosX = auxPlayer.spawnPos.x;
 		auxPlayer.nextPosY = auxPlayer.spawnPos.y;
 		auxPlayer.posX = auxPlayer.nextPosX;
