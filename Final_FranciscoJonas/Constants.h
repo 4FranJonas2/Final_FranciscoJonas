@@ -16,7 +16,7 @@ const int menuPosX = 10;
 const int menuPosY = 2;
 
 //console size
-const int WIDTH = 100;
+const int WIDTH = 50;
 const int HEIGHT = 50;
 
 //arena size
@@ -39,3 +39,9 @@ const int fontSizeX = 10;
 const int fontSizeY = 15;
 const char noneChar = ' ';
 const char playerChar = ' ';
+
+//spawn pos
+const int initPlayerPosX = 2;
+const int initPlayerPosY = 2;
+const int initPlayer2PosX = (MAX_ROWS - 3);
+const int initPlayer2PosY = (MAX_COLS - 3);

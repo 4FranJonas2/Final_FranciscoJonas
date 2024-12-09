@@ -5,5 +5,5 @@ using namespace std;
 
 void main()
 {
-	GameLoop();
+	gamePlay::GameLoop();
 }
