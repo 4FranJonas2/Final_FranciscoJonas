@@ -4,25 +4,26 @@ namespace gameColision
 {
 	void CheckNextCellPlayer(gameMatrix::Matrix matrix[][MAX_COLS], gamePlayer::Player& player)
 	{
-		if (matrix[player.nextPosX][player.nextPosY].type == CellType::NONE)
+		if (matrix[player.nextPosX][player.nextPosY].type == gameMatrix::CellType::NONE)
 		{
 			player.cellColored++;
 			UpdatePlayerCellNone(matrix, player);
 		}
 
-		else if (matrix[player.nextPosX][player.nextPosY].type == CellType::WALL)
+		else if (matrix[player.nextPosX][player.nextPosY].type == gameMatrix::CellType::WALL)
 		{
 			UpdatePlayerCellWall(matrix, player);
 		}
 
-		else if (matrix[player.nextPosX][player.nextPosY].type == CellType::COLORP1 || matrix[player.nextPosX][player.nextPosY].type == CellType::COLORP2)
+		else if (matrix[player.nextPosX][player.nextPosY].type == gameMatrix::CellType::COLORP1
+			|| matrix[player.nextPosX][player.nextPosY].type == gameMatrix::CellType::COLORP2)
 		{
 			player.gameOver = true;
 			player.playerIsAlive = false;
 			player.MatchesLost++;
 		}
 
-		else if (matrix[player.nextPosX][player.nextPosY].type == CellType::PLAYER)
+		else if (matrix[player.nextPosX][player.nextPosY].type == gameMatrix::CellType::PLAYER)
 		{
 			player.gameOver = true;
 			player.MatchesLost++;
