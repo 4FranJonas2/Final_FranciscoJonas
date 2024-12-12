@@ -13,6 +13,7 @@ namespace gamePlay
 	gamePlayer::Player player2;
 	gameMatrix::Matrix matrix[MAX_ROWS][MAX_COLS];
 	SCENEMANAGER simStat;
+	bool isReset = false;
 
 	//main loop del juego
 	void GameLoop()
@@ -36,6 +37,7 @@ namespace gamePlay
 		ChangeConsoleFont(fontSizeX, fontSizeY);
 		InitGameEntities();
 		simStat = SCENEMANAGER::MENU;
+		system("cls");
 	}
 	void Input()
 	{
@@ -46,12 +48,6 @@ namespace gamePlay
 		case SCENEMANAGER::PLAY:
 			gamePlayer::InputPlayer(player, playerDir, simStat);
 			gamePlayer::InputPlayer(player2, playerDir2, simStat);
-			break;
-		case SCENEMANAGER::RESET:
-			break;
-		case SCENEMANAGER::RESUME:
-			break;
-		case SCENEMANAGER::WINLOSE:
 			break;
 		default:
 			break;
@@ -65,14 +61,18 @@ namespace gamePlay
 			break;
 		case SCENEMANAGER::MENU:
 			gameMenus::UpdateMainMenu(simStat);
-			InitGameEntities();
+			if (player.gameOver)
+			{
+				InitGameEntities();
+				player.gameOver = false;
+			}
 			break;
 		case SCENEMANAGER::PLAY:
-			gamePlayer::UpdatePlayer(player, playerDir);	
+			gamePlayer::UpdatePlayer(player, playerDir);
 			gamePlayer::UpdatePlayer(player2, playerDir2);
-			gameMenus::UpdateInGameMenu(simStat,player.gameOver);
-			gameColision::CheckNextCellPlayer(matrix, player);
-			gameColision::CheckNextCellPlayer(matrix, player2);
+			gameColision::CheckNextCellPlayer(matrix, player, simStat, playerDir);
+			gameColision::CheckNextCellPlayer(matrix, player2, simStat, playerDir2);
+			AddPoints();
 			break;
 		case SCENEMANAGER::CREDITS:
 			gameMenus::UpdateMainMenu(simStat);
@@ -81,17 +81,16 @@ namespace gamePlay
 			gameMenus::UpdateMainMenu(simStat);
 			break;
 		case SCENEMANAGER::PAUSE:
-			gameMenus::UpdateInGameMenu(simStat, player.gameOver);
+			gameMenus::UpdatePauseMenu(simStat, player.gameOver, isReset);
 			break;
 		case SCENEMANAGER::RESET:
 			InitGameEntities();
 			break;
 		case SCENEMANAGER::RESUME:
-
 			simStat = SCENEMANAGER::PLAY;
 			break;
-		case SCENEMANAGER::WINLOSE:
-
+		case SCENEMANAGER::WINLOSE:		
+			gameMenus::UpdatePauseMenu(simStat, player.gameOver, isReset);
 			break;
 		case SCENEMANAGER::EXIT:
 			gameMenus::UpdateMainMenu(simStat);
@@ -104,6 +103,8 @@ namespace gamePlay
 	{
 		switch (simStat)
 		{
+		case SCENEMANAGER::NONE:
+			break;
 		case SCENEMANAGER::MENU:
 			gameMenus::DrawMainMenu();
 			break;
@@ -118,21 +119,31 @@ namespace gamePlay
 			gameMatrix::DrawCell(matrix);
 			break;
 		case SCENEMANAGER::PLAY:
-			gamePlayer::DrawGamePlayUI(player.MatchesWon,player.MatchesLost, player.cellColored, player.kills, player.death, player.points);
+			gamePlayer::DrawGamePlayUI(player.MatchesWon, player.MatchesLost, player.cellColored,
+				player.kills, player.death, player.points, player.isPlayer1);
+
+			gamePlayer::DrawGamePlayUI(player2.MatchesWon, player2.MatchesLost, player2.cellColored,
+				player2.kills, player2.death, player2.points, player2.isPlayer1);
+
 			gameMatrix::DrawCell(matrix);
-			//Draw(matrix, player);
-			//gameMatrix::DrawMatrix(matrix);
-			//gameMatrix::DrawPlayer(playerChar);
-			//gameMatrix::DrawWallCell(noneChar);
-			//gameMatrix::DrawColorCell(player.cellColored.)
-			//gameMatrix::DrawCellPlayer(matrix);
 			Sleep(50);
 			break;
 		case SCENEMANAGER::RESET:
-			gamePlayer::DrawGamePlayUI(player.MatchesWon, player.MatchesLost, player.cellColored, player.kills, player.death, player.points);
+			gamePlayer::DrawGamePlayUI(player.MatchesWon, player.MatchesLost, player.cellColored,
+				player.kills, player.death, player.points, player.isPlayer1);
+
+			gamePlayer::DrawGamePlayUI(player2.MatchesWon, player2.MatchesLost, player2.cellColored,
+				player2.kills, player2.death, player2.points, player2.isPlayer1);
+
 			gameMatrix::DrawCell(matrix);
 			break;
 		case SCENEMANAGER::WINLOSE:
+			gamePlayer::DrawGamePlayUI(player.MatchesWon, player.MatchesLost, player.cellColored,
+				player.kills, player.death, player.points, player.isPlayer1);
+
+			gamePlayer::DrawGamePlayUI(player2.MatchesWon, player2.MatchesLost, player2.cellColored,
+				player2.kills, player2.death, player2.points, player2.isPlayer1);
+
 			gameMenus::DrawWinLoseMenu();
 			break;
 		case SCENEMANAGER::EXIT:
@@ -144,58 +155,47 @@ namespace gamePlay
 	}
 	void InitGameEntities()
 	{
-		bool isPlayer1;
-
-		gameMatrix::InitMatrix(matrix, player.spawnPos, player2.spawnPos);
-		isPlayer1 = true;
-		gamePlayer::InitPlayer(player, playerDir, isPlayer1);
-		isPlayer1 = false;
-		gamePlayer::InitPlayer(player2, playerDir, isPlayer1);
-		if (!matchEnd)
+		if (simStat == SCENEMANAGER::NONE || simStat == SCENEMANAGER::RESET || simStat == SCENEMANAGER::MENU)
 		{
-			playerDir = gamePlayer::DIRECTION::STOP;
-			playerDir2 = gamePlayer::DIRECTION::STOP;
+			//segun se necesite reiniciar vuelve a inicar la matrix y player a default
+			bool isPlayer1;
+			system("cls");
+			gameMatrix::InitMatrix(matrix, player.spawnPos, player2.spawnPos);
+			isPlayer1 = true;
+			gamePlayer::InitPlayer(player, playerDir, isPlayer1);
+			isPlayer1 = false;
+			gamePlayer::InitPlayer(player2, playerDir, isPlayer1);
+
+
+			if (!matchEnd)
+			{
+				playerDir = gamePlayer::DIRECTION::STOP;
+				playerDir2 = gamePlayer::DIRECTION::STOP;
+
+			}
+			if (isReset)
+			{
+				gameMatrix::DrawCell(matrix);
+				playerDir = gamePlayer::DIRECTION::STOP;
+				playerDir2 = gamePlayer::DIRECTION::STOP;
+				simStat = SCENEMANAGER::PLAY;
+				isReset = false;
+			}
+		}
+	}
+	void AddPoints()
+	{
+		if (player.isPlayer1 && player.playerIsAlive && !player2.playerIsAlive && !player2.wallDeath)
+		{
+			player.kills++;
+			player.MatchesWon++;
+			player.points += 100;
+		}
+		else if (!player.isPlayer1 && player2.playerIsAlive && !player.playerIsAlive && !player.wallDeath)
+		{
+			player2.kills++;
+			player2.MatchesWon++;
+			player2.points += 100;
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

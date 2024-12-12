@@ -41,7 +41,6 @@ namespace gameMatrix
 			matrix[i][MAX_COLS - 1].type = CellType::WALL;
 		}
 	}
-
 	void DrawCell(Matrix matrix[][MAX_COLS])
 	{
 		for (int i = 0; i < MAX_ROWS; i++)
@@ -74,44 +73,7 @@ namespace gameMatrix
 			}
 		}
 	}
-	/*void DrawMatrix(Matrix matrix[][MAX_COLS])
-	{
-		for (int i = 0; i < MAX_ROWS; i++)
-		{
-			for (int j = 0; j < MAX_COLS; j++)
-			{
-				Gotoxy(arenaDrawPosX + i, arenaDrawPosY + j);
-
-				switch (matrix[i][j].type)
-				{
-				case CellType::NONE:
-					cout << " ";
-					break;
-
-				case CellType::PLAYER:
-					DrawPlayer(playerChar);
-					break;
-
-				case CellType::WALL:
-					DrawWallCell(noneChar);
-					break;
-
-				case CellType::COLORP1:
-					DrawColorCell(BLUE);
-					break;
-
-				case CellType::COLORP2:
-					DrawColorCell(BLUE);
-					break;
-
-				default:
-					break;
-				}
-			}
-			cout << endl;
-		}
-	}*/
-
+	
 	//printean los tipos de celda en particular
 	void DrawPlayer(char characterToDraw)
 	{

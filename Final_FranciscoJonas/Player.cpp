@@ -2,28 +2,31 @@
 
 namespace gamePlayer
 {
-	Player InitPlayer(Player& auxPlayer, DIRECTION& playerDir, bool isFirstPlayer)
+	Player InitPlayer(Player& auxPlayer, DIRECTION& playerDir, bool isPlayer1)
 	{
 		auxPlayer.gameOver = false;
-		bool pauseStatus = false;
-		bool menuStatus = false;
-		bool endSimulation = false;
 		auxPlayer.playerIsAlive = true;
 		playerDir = DIRECTION::STOP;
+		auxPlayer.cellColored = 0;
+		auxPlayer.wallDeath = false;
 
-		//spawn point
-		if (isFirstPlayer)
+		//punto de spawn jugador 1
+		if (isPlayer1)
 		{
 			auxPlayer.spawnPos.x = initPlayerPosX;
 			auxPlayer.spawnPos.y = initPlayerPosY;
 			auxPlayer.isPlayer1 = true;
+			auxPlayer.playerIsAlive = true;
 		}
+		//punto de spawn jugador 2
 		else
 		{
 			auxPlayer.spawnPos.x = initPlayer2PosX;
 			auxPlayer.spawnPos.y = initPlayer2PosY;
+			auxPlayer.playerIsAlive = true;
 		}
 
+		//seteo a los jugadores en sus posiciones inciales
 		auxPlayer.nextPosX = auxPlayer.spawnPos.x;
 		auxPlayer.nextPosY = auxPlayer.spawnPos.y;
 		auxPlayer.posX = auxPlayer.nextPosX;
@@ -122,23 +125,36 @@ namespace gamePlayer
 			break;
 		}
 	}
-	void DrawGamePlayUI(int& matchWon, int& matchLost, int& cellColored, int& kills, int& deaths, int& points)
+	void DrawGamePlayUI(int& matchWon, int& matchLost, int& cellColored, int& kills, int& deaths, int& points, bool isPlayer1)
 	{
 		Gotoxy(menuPosX, menuPosY);
 
-		cout << "  GAME STATS" << endl;
-		cout << "\n" << endl;
-		cout << "  Matches Won: " << matchWon << endl;
-		cout << "  Matches Lost: " << matchLost << endl;
-		cout << "\n" << endl;
-		cout << "  CellColored: " << cellColored << endl;
-		cout << "\n";
-		cout << "  Kills: " << kills << endl;
-		cout << "  Deaths: " << deaths << endl;
-		cout << "\n";
-		cout << "  Points: " << points << endl;
-		cout << "\n\n";
-		cout << "  Press ESC to PAUSE game." << endl;
+		if (isPlayer1)
+		{
+			cout << "  GAME STATS \n" << endl;
+			cout << "  PLAYER 1 STATS: "<< endl;
+			cout << "  Matches Won: " << matchWon << endl;
+			cout << "  Matches Lost: " << matchLost << endl;
+			cout << "  CellColored: " << cellColored << endl;
+			cout << "  Kills: " << kills << endl;
+			cout << "  Deaths: " << deaths << endl;
+			cout << "  Points: " << points << endl;
+			cout << "\n";
+		}
+		else
+		{
+			Gotoxy( 0, menuPosY+8);
+			cout << "\n" << endl;
+			cout << "  PLAYER 2 STATS: " << endl;
+			cout << "  Matches Won: " << matchWon << endl;
+			cout << "  Matches Lost: " << matchLost << endl;
+			cout << "  CellColored: " << cellColored << endl;
+			cout << "  Kills: " << kills << endl;
+			cout << "  Deaths: " << deaths << endl;
+			cout << "  Points: " << points << endl;
+			cout << "\n\n";
+			cout << " (while playing) Press ESC for PAUSE." << endl;
+		}
 		cout << "\n\n" << endl;
 	}
 }

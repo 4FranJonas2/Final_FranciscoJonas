@@ -32,7 +32,6 @@ namespace gameMenus
 				system("cls");
 				simStat = SCENEMANAGER::CREDITS;
 				break;
-
 			case '4':
 				system("cls");
 				simStat = SCENEMANAGER::EXIT;
@@ -67,13 +66,11 @@ namespace gameMenus
 					system("cls");
 					simStat = SCENEMANAGER::RESUME;
 					break;
-
 				case '2':
 					system("cls");
 					simStat = SCENEMANAGER::RESET;
 					resetGame = true;
 					break;
-
 				case '3':
 					system("cls");
 					simStat = SCENEMANAGER::MENU;
@@ -97,7 +94,6 @@ namespace gameMenus
 					simStat = SCENEMANAGER::RESET;
 					resetGame = true;
 					break;
-
 				case '3':
 					system("cls");
 					simStat = SCENEMANAGER::MENU;
@@ -109,6 +105,7 @@ namespace gameMenus
 			}
 		}
 	}
+
 	void DrawCredits()
 	{
 		Gotoxy(0, arenaDrawPosY);
@@ -156,11 +153,11 @@ namespace gameMenus
 	}
 	void DrawWinLoseMenu()
 	{
-		Gotoxy(0, arenaDrawPosY + MAX_COLS);
+		Gotoxy(0, arenaDrawPosY + MAX_COLS-2);
 
 		cout << "        MATCH ENDS " << endl;
 		cout << "\n\n";
-		cout << "  Press ESC to reset and continue playing." << endl;
+		cout << "  Press ESC to restart." << endl;
 		cout << "\n";
 		cout << "  Press 3 to go back to MENU " << endl;
 	}
