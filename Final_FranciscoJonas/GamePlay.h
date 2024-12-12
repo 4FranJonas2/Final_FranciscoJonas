@@ -7,6 +7,7 @@ namespace gamePlay
 	void Input();
 	void Update();
 	void Draw();
+	void InitGameEntities();
 }
 
 
