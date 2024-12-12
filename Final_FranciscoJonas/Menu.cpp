@@ -171,7 +171,7 @@ namespace gameMenus
 
 		cout << "      GAME PAUSE" << endl;
 		cout << "\n\n";
-		cout << "  ESC.  RESUME " << endl;
+		cout << "   (ESC) to  RESUME " << endl;
 		cout << "\n";
 		cout << "  2.  RESET " << endl;
 		cout << "\n";
