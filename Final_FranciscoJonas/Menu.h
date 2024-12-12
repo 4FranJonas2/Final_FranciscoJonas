@@ -10,7 +10,7 @@ namespace gameMenus
 	void DrawCredits();
 	void DrawMainMenu();
 	void DrawRules();
-	void DrawWinLoseMenu();
+	void DrawWinLoseMenu(bool isPlayer1Alive);
 	void DrawPause();
 	void DrawExitMenu();
 }

@@ -113,6 +113,11 @@ namespace gameMenus
 		cout << "        CREDITS " << endl;
 		cout << "\n\n" << endl;
 		cout << "  Made by FRANCISCO JONAS" << endl;
+		cout << "\n\n" << endl;
+		cout << " Special thanks to: " << endl;
+		cout << "\n" << endl;
+		cout << "    Federico Olive" << endl;
+		cout << "    Guido Thelo" << endl;
 		cout << "\n" << endl;
 		cout << "    FINAL INTEGRADOR" << endl;
 		cout << "\n\n" << endl;
@@ -143,20 +148,28 @@ namespace gameMenus
 
 		cout << "        RULES " << endl;
 		cout << "\n\n";
-		cout << "  Use  WASD to move and draw lines." << endl;
+		cout << "Player 1 use  WASD to move." << endl;
+		cout << "Player 2 use  ARROW KEYS to move." << endl;
 		cout << "\n";
-		cout << "  Won by making your opponent crash into your line or theirs " << endl;
-		cout << "\n";
-		cout << "  If you hit a Colored line or the other player, you lose." << endl;
+		cout << "If you hit a Colored line, the other player or a wall, you lose." << endl;
 		cout << "\n\n";
 		cout << "  Press ESC to go back..." << endl;
 	}
-	void DrawWinLoseMenu()
+	void DrawWinLoseMenu(bool isPlayer1Alive)
 	{
 		Gotoxy(0, arenaDrawPosY + MAX_COLS-2);
 
 		cout << "        MATCH ENDS " << endl;
-		cout << "\n\n";
+		cout << "\n";
+		if (!isPlayer1Alive)
+		{
+			cout << "     Player 2 WINS." << endl;
+		}
+		else
+		{
+			cout << "     Player 1 WINS." << endl;
+		}
+		cout << "\n";
 		cout << "  Press ESC to restart." << endl;
 		cout << "\n";
 		cout << "  Press 3 to go back to MENU " << endl;
