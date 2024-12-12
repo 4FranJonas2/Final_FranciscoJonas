@@ -2,7 +2,8 @@
 
 namespace gameColision
 {
-	void CheckNextCellPlayer(gameMatrix::Matrix matrix[][MAX_COLS], gamePlayer::Player& player, SCENEMANAGER& simStat, gamePlayer::DIRECTION playerdir)
+	void CheckNextCellPlayer(gameMatrix::Matrix matrix[][MAX_COLS], gamePlayer::Player& player, SCENEMANAGER& simStat, gamePlayer::DIRECTION playerdir,
+		int nextPosXP1, int nextPosYP1, int nextPosXP2, int nextPosYP2)
 	{
 		
 		//si la siguiente celda esta vacia
@@ -34,7 +35,11 @@ namespace gameColision
 		//colision entre players
 		if (matrix[player.nextPosX][player.nextPosY].type == gameMatrix::CellType::PLAYER && playerdir != gamePlayer::DIRECTION::STOP)
 		{
-			UpdatePlayerWhenColision(matrix, player);
+			if (nextPosXP1 == nextPosXP2 && nextPosYP1 == nextPosYP2)
+			{
+				CheckWhoLose(matrix, player, simStat);
+			}
+			//UpdatePlayerWhenColision(matrix, player);
 		}
 	}
 	void UpdatePlayerCellNone(gameMatrix::Matrix matrix[][MAX_COLS], gamePlayer::Player& player)

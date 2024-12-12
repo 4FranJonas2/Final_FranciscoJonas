@@ -70,8 +70,8 @@ namespace gamePlay
 		case SCENEMANAGER::PLAY:
 			gamePlayer::UpdatePlayer(player, playerDir);
 			gamePlayer::UpdatePlayer(player2, playerDir2);
-			gameColision::CheckNextCellPlayer(matrix, player, simStat, playerDir);
-			gameColision::CheckNextCellPlayer(matrix, player2, simStat, playerDir2);
+			gameColision::CheckNextCellPlayer(matrix, player, simStat, playerDir, player.nextPosX, player.nextPosY, player2.nextPosX, player2.nextPosY);
+			gameColision::CheckNextCellPlayer(matrix, player2, simStat, playerDir2, player.nextPosX, player.nextPosY, player2.nextPosX, player2.nextPosY);
 			AddPoints();
 			break;
 		case SCENEMANAGER::CREDITS:
