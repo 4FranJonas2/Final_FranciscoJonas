@@ -5,6 +5,7 @@
 #include "Utils.h"
 #include "Menu.h"
 
+
 namespace gamePlay
 {
 	gamePlayer::DIRECTION playerDir;
@@ -20,6 +21,8 @@ namespace gamePlay
 	{
 		srand(time(NULL));
 		//SetWindowSize();
+		HideCursor();
+		ChangeConsoleFont(fontSizeX, fontSizeY);
 		// simulation loop
 		Init();
 
@@ -32,9 +35,7 @@ namespace gamePlay
 	}
 
 	void Init()
-	{
-		HideCursor();
-		ChangeConsoleFont(fontSizeX, fontSizeY);
+	{	
 		InitGameEntities();
 		simStat = SCENEMANAGER::MENU;
 		system("cls");
@@ -144,7 +145,7 @@ namespace gamePlay
 			gamePlayer::DrawGamePlayUI(player2.MatchesWon, player2.MatchesLost, player2.cellColored,
 				player2.kills, player2.death, player2.points, player2.isPlayer1);
 
-			gameMenus::DrawWinLoseMenu();
+			gameMenus::DrawWinLoseMenu(player.playerIsAlive);
 			break;
 		case SCENEMANAGER::EXIT:
 			gameMenus::DrawExitMenu();
