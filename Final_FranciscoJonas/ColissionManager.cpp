@@ -4,40 +4,59 @@ namespace gameColision
 {
 	void CheckNextCellPlayer(gameMatrix::Matrix matrix[][MAX_COLS], gamePlayer::Player& player)
 	{
+		//si la siguiente celda esta vacia
 		if (matrix[player.nextPosX][player.nextPosY].type == gameMatrix::CellType::NONE)
 		{
 			player.cellColored++;
 			UpdatePlayerCellNone(matrix, player);
 		}
 
+		//si la siguiente celda es un muro
 		else if (matrix[player.nextPosX][player.nextPosY].type == gameMatrix::CellType::WALL)
 		{
-			UpdatePlayerCellWall(matrix, player);
+			UpdatePlayerWhenColision(matrix, player);
 		}
 
-		else if (matrix[player.nextPosX][player.nextPosY].type == gameMatrix::CellType::COLORP1
-			|| matrix[player.nextPosX][player.nextPosY].type == gameMatrix::CellType::COLORP2)
+		if (matrix[player.nextPosX][player.nextPosY].type == gameMatrix::CellType::COLORP1)
 		{
-			player.gameOver = true;
-			player.playerIsAlive = false;
+			/*player.gameOver = true;
+			player.playerIsAlive = false;*/
 			player.MatchesLost++;
+			UpdatePlayerWhenColision(matrix, player);
 		}
 
-		else if (matrix[player.nextPosX][player.nextPosY].type == gameMatrix::CellType::PLAYER)
+		if (matrix[player.nextPosX][player.nextPosY].type == gameMatrix::CellType::COLORP2)
 		{
-			player.gameOver = true;
+			/*player.gameOver = true;
+			player.playerIsAlive = false;*/
 			player.MatchesLost++;
+			UpdatePlayerWhenColision(matrix, player);
+		}
+
+		if (matrix[player.nextPosX][player.nextPosY].type == gameMatrix::CellType::PLAYER)
+		{
+			/*player.gameOver = true;
+			player.MatchesLost++;*/
+			UpdatePlayerWhenColision(matrix, player);
 		}
 	}
+
 	void UpdatePlayerCellNone(gameMatrix::Matrix matrix[][MAX_COLS], gamePlayer::Player& player)
 	{
-		matrix[player.posX][player.posY].type = gameMatrix::CellType::COLORP1;
-		//matrix[player.posX][player.posY].type = CellType::COLORP2;
+		if (player.isPlayer1)
+		{
+			matrix[player.posX][player.posY].type = gameMatrix::CellType::COLORP1;
+		}
+		if(!player.isPlayer1)
+		{
+			matrix[player.posX][player.posY].type = gameMatrix::CellType::COLORP2;
+		}
+
 		player.posX = player.nextPosX;
 		player.posY = player.nextPosY;
 		matrix[player.posX][player.posY].type = gameMatrix::CellType::PLAYER;
 	}
-	void UpdatePlayerCellWall(gameMatrix::Matrix matrix[][MAX_COLS], gamePlayer::Player& player)
+	void UpdatePlayerWhenColision(gameMatrix::Matrix matrix[][MAX_COLS], gamePlayer::Player& player)
 	{
 		matrix[player.posX][player.posY].type = gameMatrix::CellType::PLAYER;
 		player.nextPosX = player.posX;
