@@ -2,7 +2,7 @@
 
 namespace gameMatrix
 {
-	void InitMatrix(Matrix matrix[][MAX_COLS], Vector2 playerPos)
+	void InitMatrix(Matrix matrix[][MAX_COLS], Vector2 playerPos, Vector2 player2Pos)
 	{
 		int playerPosX = playerPos.x;
 		int playerPosY = playerPos.y;
@@ -42,25 +42,7 @@ namespace gameMatrix
 		}
 	}
 
-	void DrawPlayer(char characterToDraw)
-	{
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), white);
-		cout << characterToDraw;
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), transparent);
-	}
-	void DrawWallCell(char characterToDraw)
-	{
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), orange);
-		cout << characterToDraw;
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), transparent);
-	}
-	void DrawColorCell(int characterToDraw)
-	{
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), characterToDraw);
-		cout << noneChar;
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), transparent);
-	}
-	void DrawCellPlayer(Matrix matrix[][MAX_COLS])
+	void DrawCell(Matrix matrix[][MAX_COLS])
 	{
 		for (int i = 0; i < MAX_ROWS; i++)
 		{
@@ -72,27 +54,27 @@ namespace gameMatrix
 					DrawPlayer(white);
 				}
 
-				else if (matrix[i][j].type == CellType::COLORP1)
+				if (matrix[i][j].type == CellType::WALL)
+				{
+					Gotoxy(arenaDrawPosX + i, arenaDrawPosY + j);
+					DrawWallCell(noneChar);
+				}
+
+				if (matrix[i][j].type == CellType::COLORP1)
 				{
 					Gotoxy(arenaDrawPosX + i, arenaDrawPosY + j);
 					DrawColorCell(BLUE);
 				}
 
-				//if (matrix[i][j].type == CellType::PLAYER)
-				//{
-				//	Gotoxy(arenaDrawPosX + i, arenaDrawPosY + j);
-				//	DrawPlayerCell(white);
-				//}
-
-				//else if (matrix[i][j].type == CellType::COLORP2)
-				//{
-				//	Gotoxy(arenaDrawPosX + i, arenaDrawPosY + j);
-				//	DrawColorCell(RED);
-				//}
+				if (matrix[i][j].type == CellType::COLORP2)
+				{
+					Gotoxy(arenaDrawPosX + i, arenaDrawPosY + j);
+					DrawColorCell(RED);
+				}
 			}
 		}
 	}
-	void DrawMatrix(Matrix matrix[][MAX_COLS])
+	/*void DrawMatrix(Matrix matrix[][MAX_COLS])
 	{
 		for (int i = 0; i < MAX_ROWS; i++)
 		{
@@ -118,11 +100,35 @@ namespace gameMatrix
 					DrawColorCell(BLUE);
 					break;
 
+				case CellType::COLORP2:
+					DrawColorCell(BLUE);
+					break;
+
 				default:
 					break;
 				}
 			}
 			cout << endl;
 		}
+	}*/
+
+	//printean los tipos de celda en particular
+	void DrawPlayer(char characterToDraw)
+	{
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), white);
+		cout << characterToDraw;
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), transparent);
+	}
+	void DrawWallCell(char characterToDraw)
+	{
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), orange);
+		cout << characterToDraw;
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), transparent);
+	}
+	void DrawColorCell(int characterToDraw)
+	{
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), characterToDraw);
+		cout << noneChar;
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), transparent);
 	}
 }
