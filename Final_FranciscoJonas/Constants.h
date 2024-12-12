@@ -9,6 +9,7 @@ using namespace std;
 const bool simEnd = false;
 const bool matchEnd = false;
 
+
 //Menu control
 const char ESC = 27;
 const char UP = 72;
