@@ -16,6 +16,7 @@ namespace gamePlayer
 		{
 			auxPlayer.spawnPos.x = initPlayerPosX;
 			auxPlayer.spawnPos.y = initPlayerPosY;
+			auxPlayer.isPlayer1 = true;
 		}
 		else
 		{
@@ -30,42 +31,68 @@ namespace gamePlayer
 
 		return auxPlayer;
 	}
-	void InputPlayer(Player& player, DIRECTION& playerDir)
+	void InputPlayer(Player& player, DIRECTION& playerDir, SCENEMANAGER& simStat)
 	{
 		if (_kbhit())
 		{
-			switch (_getch())
+			if (player.isPlayer1)
 			{
-			case 'a':
-			case 'A':
-				playerDir = DIRECTION::LEFT;
-				break;
+				switch (_getch())
+				{
+				case 'a':
+				case 'A':
+					playerDir = DIRECTION::LEFT;
+					break;
 
-			case 'd':
-			case 'D':
-				playerDir = DIRECTION::RIGHT;
-				break;
+				case 'd':
+				case 'D':
+					playerDir = DIRECTION::RIGHT;
+					break;
 
-			case 'w':
-			case 'W':
-				playerDir = DIRECTION::UP;
-				break;
+				case 'w':
+				case 'W':
+					playerDir = DIRECTION::UP;
+					break;
 
-			case 's':
-			case 'S':
-				playerDir = DIRECTION::DOWN;
-				break;
+				case 's':
+				case 'S':
+					playerDir = DIRECTION::DOWN;
+					break;
 
-			case 'p':
-			case 'P':
-				player.gameOver = true;
-				break;
+				case ESC:
+					system("cls");
+					simStat = SCENEMANAGER::PAUSE;
+					break;
 
-			default:
-				break;
+				default:
+					break;
+				}
 			}
 
+			if (!player.isPlayer1)
+			{
+				switch (_getch())
+				{
+				case UP:
+					playerDir = DIRECTION::UP;
+					break;
 
+				case DOWN:
+					playerDir = DIRECTION::DOWN;
+					break;
+
+				case LEFT:
+					playerDir = DIRECTION::LEFT;
+					break;
+
+				case RIGHT:
+					playerDir = DIRECTION::RIGHT;
+					break;
+
+				default:
+					break;
+				}
+			}
 		}
 	}
 	void UpdatePlayer(Player& player, DIRECTION& playerDir)
@@ -95,27 +122,23 @@ namespace gamePlayer
 			break;
 		}
 	}
-	void DrawGamePlayUI(Player& player)
+	void DrawGamePlayUI(int& matchWon, int& matchLost, int& cellColored, int& kills, int& deaths, int& points)
 	{
 		Gotoxy(menuPosX, menuPosY);
 
 		cout << "  GAME STATS" << endl;
 		cout << "\n" << endl;
-		cout << "  Matches Won: " << player.MatchesWon << endl;
-		cout << "  Matches Lost: " << player.MatchesLost << endl;
+		cout << "  Matches Won: " << matchWon << endl;
+		cout << "  Matches Lost: " << matchLost << endl;
 		cout << "\n" << endl;
-		cout << "  CellColored: " << player.cellColored << endl;
+		cout << "  CellColored: " << cellColored << endl;
 		cout << "\n";
-		cout << "  Kills: " << player.kills << endl;
-		cout << "  Deaths: " << player.death << endl;
+		cout << "  Kills: " << kills << endl;
+		cout << "  Deaths: " << deaths << endl;
 		cout << "\n";
-		cout << "  Points: " << player.points << endl;
+		cout << "  Points: " << points << endl;
 		cout << "\n\n";
-		cout << "  Press P to PAUSE game." << endl;
-		cout << "\n";
-		cout << "  On PAUSE: " << endl;
-		cout << "  Press ESC to back MENU." << endl;
-		cout << "  Press R to RESUME game." << endl;
+		cout << "  Press ESC to PAUSE game." << endl;
 		cout << "\n\n" << endl;
 	}
 }

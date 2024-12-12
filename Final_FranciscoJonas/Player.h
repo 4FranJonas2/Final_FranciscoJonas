@@ -43,10 +43,11 @@ namespace gamePlayer
 		bool gameOver = false;
 		bool playerIsAlive = true;
 		bool player2IsAlive = true;
+		bool isPlayer1 = false;
 	};
 
 	Player InitPlayer(Player& auxPlayer, DIRECTION& playerDir, bool isFirstPlayer);
-	void InputPlayer(Player& player, DIRECTION& playerDir);
+	void InputPlayer(Player& player, DIRECTION& playerDir, SCENEMANAGER& simStat);
 	void UpdatePlayer(Player& player, DIRECTION& playerDir);
-	void DrawGamePlayUI(Player& player);
+	void DrawGamePlayUI(int& matchWon, int& matchLost, int& cellColored, int& kills, int& deaths, int& points);
 }
