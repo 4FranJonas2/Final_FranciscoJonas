@@ -54,7 +54,7 @@ namespace gameMenus
 			}
 		}
 	}
-	void UpdateInGameMenu(SCENEMANAGER& simStat, bool& endGame)
+	void UpdatePauseMenu(SCENEMANAGER& simStat, bool& endGame, bool& resetGame)
 	{
 		//Pause Menu
 		if (simStat == SCENEMANAGER::PAUSE)
@@ -71,11 +71,13 @@ namespace gameMenus
 				case '2':
 					system("cls");
 					simStat = SCENEMANAGER::RESET;
+					resetGame = true;
 					break;
 
 				case '3':
 					system("cls");
 					simStat = SCENEMANAGER::MENU;
+					endGame = true;
 					break;
 				default:
 					break;
@@ -84,7 +86,7 @@ namespace gameMenus
 		}
 
 		//WinLoseMenu
-		/*if (simStat == SCENEMANAGER::PAUSE)
+		if (simStat == SCENEMANAGER::WINLOSE)
 		{
 			if (_kbhit())
 			{
@@ -92,23 +94,20 @@ namespace gameMenus
 				{
 				case ESC:
 					system("cls");
-					simStat = SCENEMANAGER::RESUME;
-					break;
-
-				case '2':
-					system("cls");
 					simStat = SCENEMANAGER::RESET;
+					resetGame = true;
 					break;
 
 				case '3':
 					system("cls");
 					simStat = SCENEMANAGER::MENU;
+					endGame = true;
 					break;
 				default:
 					break;
 				}
 			}
-		}*/
+		}
 	}
 	void DrawCredits()
 	{
@@ -161,9 +160,9 @@ namespace gameMenus
 
 		cout << "        MATCH ENDS " << endl;
 		cout << "\n\n";
-		cout << "  Press T to reset and continue playing." << endl;
+		cout << "  Press ESC to reset and continue playing." << endl;
 		cout << "\n";
-		cout << "  Press ESC to go back... " << endl;
+		cout << "  Press 3 to go back to MENU " << endl;
 	}
 	void DrawPause()
 	{

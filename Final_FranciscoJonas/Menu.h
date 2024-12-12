@@ -5,7 +5,7 @@
 namespace gameMenus
 {
 	void UpdateMainMenu(SCENEMANAGER& simStat);
-	void UpdateInGameMenu(SCENEMANAGER& simStat, bool& endGame);
+	void UpdatePauseMenu(SCENEMANAGER& simStat, bool& endGame, bool& resetGame);
 	
 	void DrawCredits();
 	void DrawMainMenu();
