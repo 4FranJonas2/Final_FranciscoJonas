@@ -7,9 +7,14 @@ using namespace std;
 
 //simControl
 const bool simEnd = false;
+const bool matchEnd = false;
 
 //Menu control
 const char ESC = 27;
+const char UP = 72;
+const char DOWN = 80;
+const char RIGHT = 77;
+const char LEFT = 75;
 
 //Menu position
 const int menuPosX = 10;
